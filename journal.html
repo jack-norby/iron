@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Iron Journal</title>
+<meta name="description" content="A simple, private journal: a monthly log, habits, actions, gratitude, prayers and entries.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Iron">
+<!-- link previews (texts, group chats, socials). The address must be the live site's. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Iron">
+<meta property="og:title" content="Iron · Journal">
+<meta property="og:description" content="A simple, private journal: a monthly log, habits, actions, gratitude, prayers and entries.">
+<meta property="og:url" content="https://jack-norby.github.io/iron/journal.html">
+<meta property="og:image" content="https://jack-norby.github.io/iron/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Iron. “Iron sharpens iron, and one man sharpens another.” Proverbs 27:17. A sword against bright light.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0f0d0c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Gloock&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg class="filters" aria-hidden="true" focusable="false">
+  <filter id="fuzz" x="-4%" y="-12%" width="108%" height="124%"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="fuzz-sm" x="-4%" y="-12%" width="108%" height="124%"><feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/></filter>
+</svg>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="index.html">Iron</a>
+    <nav aria-label="Sections">
+      <a href="index.html#today">Today</a>
+      <a href="index.html#progress">Progress</a>
+      <a href="index.html#goals">Goals</a>
+      <a href="index.html#group">Group</a>
+      <a href="resources.html">Resources</a>
+      <a href="journal.html" aria-current="page">Journal</a>
+    </nav>
+    <button type="button" class="nav-account" id="account-btn" hidden>Sign in</button>
+  </div>
+</header>
+
+<main>
+
+  <section class="section">
+    <div class="frame frame--journal">
+      <img class="frame-photo" src="crucifix.jpg" alt="" width="520" height="650">
+      <p class="verse-big">“I will remember the deeds of the LORD; yes, I will remember your wonders of old.”</p>
+      <div class="frame-meta"><span>Psalm 77:11</span><span>Private · only you can see it</span></div>
+    </div>
+    <div class="res-intro">
+      <p class="eyebrow">Journal</p>
+      <h1>Write it down.</h1>
+      <p>Your memory is shorter than you think. Write one line a day, track a few habits and keep your prayers somewhere you’ll see them answered. Skip a day? No big deal. Fill it in later.</p>
+      <p class="hint">Your journal is private. If you’re signed in it saves to your account, and group leaders can never see it.</p>
+      <div class="jump-links">
+        <a href="#month">This month</a>
+        <a href="#actions-sec">Actions</a>
+        <a href="#pages">Remember · Gratitude · Prayers</a>
+        <a href="#entries-sec">Entries</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MONTHLY LOG -->
+  <section class="section" id="month">
+    <p class="eyebrow">Monthly log</p>
+    <div class="cal-head">
+      <button type="button" id="prev-month" aria-label="Previous month">←</button>
+      <h2 id="month-name">Month</h2>
+      <button type="button" id="next-month" aria-label="Next month">→</button>
+    </div>
+    <p>One line a day: the highlight, the thing that made that day that day. Then mark up to three habits. Tap once for done, twice for missed.</p>
+    <div class="jhabits">
+      <label><span>1</span><input id="habit-0" type="text" maxlength="30" placeholder="e.g. Wake up on time"></label>
+      <label><span>2</span><input id="habit-1" type="text" maxlength="30" placeholder="e.g. Move"></label>
+      <label><span>3</span><input id="habit-2" type="text" maxlength="30" placeholder="e.g. Read my Bible"></label>
+    </div>
+    <div class="jlog" id="log"></div>
+    <p class="hint">Keep it to three habits. Small, doable and every day beats ten you drop by week two.</p>
+  </section>
+
+  <!-- ACTIONS -->
+  <section class="section" id="actions-sec">
+    <p class="eyebrow">This month</p>
+    <h2 id="actions-title">Actions</h2>
+    <p>The few things you want to get done this month. Rename the lists to whatever fits, like Personal and School.</p>
+    <div class="jlists" id="actions"></div>
+  </section>
+
+  <!-- PAGES -->
+  <section class="section" id="pages">
+    <p class="eyebrow">Keep these close</p>
+    <h2>Remember, Gratitude, Prayers</h2>
+    <div class="jpages">
+      <div class="jpage"><h3>Remember</h3><div id="page-remember"></div></div>
+      <div class="jpage"><h3>Gratitude</h3><div id="page-gratitude"></div></div>
+      <div class="jpage"><h3>Prayers</h3><div id="page-prayers"></div></div>
+    </div>
+  </section>
+
+  <!-- ENTRIES -->
+  <section class="section" id="entries-sec">
+    <p class="eyebrow">Entries</p>
+    <h2>Think it through on paper</h2>
+    <form class="jentry-form" id="entry-form">
+      <div class="add-row">
+        <select id="entry-type" aria-label="Kind of entry">
+          <option>Journal</option>
+          <option>Prayer</option>
+          <option>Sermon notes</option>
+          <option>Bible study</option>
+        </select>
+      </div>
+      <textarea id="entry-text" rows="6" placeholder="What’s on your mind?" aria-label="Entry"></textarea>
+      <div class="btn-row"><button type="submit" class="btn">Save entry</button></div>
+      <p class="status" id="entry-status" role="status"></p>
+    </form>
+    <div class="jentries" id="entries"></div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Made for college connection groups. <a href="index.html">Back to today’s check-in</a>.</p>
+  <p class="fine">Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), © 2001 by Crossway, a publishing ministry of Good News Publishers. Used by permission. All rights reserved.</p>
+</footer>
+
+<script src="goals.js"></script>
+<script src="plan.js"></script>
+<script src="app.js"></script>
+<script src="firebase-config.js"></script>
+<script src="account.js"></script>
+<script src="journal.js"></script>
+</body>
+</html>

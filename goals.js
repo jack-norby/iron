@@ -22,10 +22,12 @@ window.AREAS = [
     tagline: "Take care of the body God gave you.",
     why: "A tired, run-down body makes everything harder, including following Jesus. Sleep, move, eat real food and get outside.",
     verse: { text: "For you were bought with a price. So glorify God in your body.", ref: "1 Corinthians 6:20" },
+    app: { name: "Ceko", note: "Lift with your gym: track workouts, lifts, runs and food with your friends. Made by a Salt Company leader.", url: "https://apps.apple.com/us/app/ceko-lift-with-your-gym/id6791621489" },
     goals: [
       { id: "ph-bedtime", label: "Consistent bedtime", detail: "Same time most nights.", starter: true },
       { id: "ph-sleep", label: "7+ hours of sleep", detail: "What most adults need (CDC)." },
       { id: "ph-exercise", label: "30 minutes of exercise", detail: "Lift, run, play, anything that gets your heart rate up.", starter: true },
+      { id: "ph-log", label: "Log my workout or meals", detail: "Track it in Ceko so you can see your progress." },
       { id: "ph-water", label: "Drink enough water", detail: "Carry a bottle and refill it between classes." },
       { id: "ph-produce", label: "Fruit or veggie at every meal", detail: "Add one to every plate." },
       { id: "ph-outside", label: "Get outside", detail: "At least 20 minutes outdoors." }

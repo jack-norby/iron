@@ -306,7 +306,7 @@
     AREAS.forEach(function (area, i) {
       var det = document.createElement("details");
       det.className = "area area-" + area.id;
-      det.open = i === 0;
+      det.open = false; // all collapsed: open one to read it and pick goals
       det.innerHTML =
         '<summary><span class="plate plate-' + area.id + '" aria-hidden="true"></span><span><span class="area-name"></span><span class="area-tag"></span></span></summary>' +
         '<p class="area-why"></p>' +
@@ -317,6 +317,17 @@
       det.querySelector(".area-why").textContent = area.why;
       det.querySelector(".verse p").textContent = "“" + area.verse.text + "”";
       det.querySelector(".verse cite").textContent = area.verse.ref;
+      if (area.app) {
+        var app = document.createElement("a");
+        app.className = "area-app";
+        app.href = area.app.url;
+        app.target = "_blank";
+        app.rel = "noopener";
+        app.innerHTML = "<b></b><span></span><i>Get the app ↗</i>";
+        app.querySelector("b").textContent = area.app.name;
+        app.querySelector("span").textContent = area.app.note;
+        det.insertBefore(app, det.querySelector(".suggestions"));
+      }
       var ul = det.querySelector(".suggestions");
       area.goals.forEach(function (g) {
         var li = document.createElement("li");
@@ -410,6 +421,34 @@
     try { navigator.clipboard.writeText(text).then(function () { status.textContent = okMsg; }, fallback); } catch (e) { fallback(); }
   }
 
+  // Hooks for account.js (sign-in, syncing and groups) and journal.js.
+  var HAS_TRACKER = !!document.getElementById("checklist");
+  var listeners = [];
+  window.Iron = {
+    today: TODAY,
+    getState: function () { return state; },
+    fresh: fresh,
+    valid: valid,
+    summary: summary,
+    // change the saved data and sync it (used by the journal)
+    update: function (change) { change(state); save(); },
+    // run fn whenever the data is replaced, e.g. after signing in on another device
+    subscribe: function (fn) { listeners.push(fn); },
+    setState: function (next) {
+      state = valid(next) ? next : fresh();
+      if (!state.created) state.created = TODAY;
+      saveLocal();
+      if (HAS_TRACKER) {
+        selected = TODAY;
+        syncMonth();
+        renderAll();
+      }
+      listeners.forEach(function (fn) { fn(); });
+    },
+    onSave: null
+  };
+  if (!HAS_TRACKER) return; // other pages (like the journal) only use the data
+
   // ---------- wire up ----------
   function renderAll() { renderDay(); renderProgress(); renderAreas(); }
 
@@ -496,23 +535,6 @@
     reset.textContent = "Start over";
     renderAll();
   });
-
-  // Hooks for account.js (sign-in, syncing and groups).
-  window.Iron = {
-    getState: function () { return state; },
-    fresh: fresh,
-    valid: valid,
-    summary: summary,
-    setState: function (next) {
-      state = valid(next) ? next : fresh();
-      if (!state.created) state.created = TODAY;
-      saveLocal();
-      selected = TODAY;
-      syncMonth();
-      renderAll();
-    },
-    onSave: null
-  };
 
   renderQuestions();
   renderAll();

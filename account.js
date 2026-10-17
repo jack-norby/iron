@@ -23,7 +23,7 @@
   var auth, db, user = null, profile = null, userRef = null, unsub = null, pending = null;
   var groups = {}; // code -> group doc data
 
-  crew.hidden = false;
+  if (crew) crew.hidden = false;
   if (btn) btn.hidden = false;
 
   // ---------- helpers ----------
@@ -125,8 +125,28 @@
         log[k] = have.concat(src[k].filter(function (id) { return have.indexOf(id) === -1; }));
       });
     });
-    return { goals: goals, log: log, created: cloud.created < local.created ? cloud.created : local.created, welcomed: true };
+    return { goals: goals, log: log, journal: mergeJournal(cloud.journal, local.journal), created: cloud.created < local.created ? cloud.created : local.created, welcomed: true };
   }
+  // Journal: keep everything from both sides (lists by item id, days by date).
+  function mergeJournal(a, b) {
+    if (!a) return b;
+    if (!b) return a;
+    var out = JSON.parse(JSON.stringify(a));
+    ["remember", "gratitude", "prayers", "entries"].forEach(function (k) {
+      out[k] = out[k] || [];
+      (b[k] || []).forEach(function (item) {
+        if (!out[k].some(function (x) { return x.id === item.id; })) out[k].push(item);
+      });
+    });
+    out.months = out.months || {};
+    Object.keys(b.months || {}).forEach(function (m) {
+      if (!out.months[m]) { out.months[m] = b.months[m]; return; }
+      var days = out.months[m].days = out.months[m].days || {};
+      Object.keys(b.months[m].days || {}).forEach(function (d) { if (!days[d]) days[d] = b.months[m].days[d]; });
+    });
+    return out;
+  }
+
   function memberSummary() {
     var s = L.summary();
     return {
@@ -287,6 +307,7 @@
 
   // ---------- the "Your group" section ----------
   function renderCrew(mode, errText) {
+    if (!body) return; // pages without the group section
     body.innerHTML = "";
     if (mode === "loading") { body.appendChild(el("p", "hint", "Loading your group…")); return; }
     if (mode === "error") { body.appendChild(el("p", "status", errText || "Couldn’t load your group.")); return; }
@@ -505,7 +526,7 @@
     })
     .catch(function () {
       if (btn) btn.hidden = true;
-      crew.hidden = true;
+      if (crew) crew.hidden = true;
       if (note) note.textContent = "Saved on this device only. Accounts couldn’t load right now.";
     });
 })();
