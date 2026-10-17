@@ -332,18 +332,18 @@
       det.querySelector(".verse p").textContent = "“" + area.verse.text + "”";
       det.querySelector(".verse cite").textContent = area.verse.ref;
       det.querySelector(".area-rest span").textContent = area.rest;
-      if (area.app) {
-        var app = document.createElement("a");
-        app.className = "area-app";
-        app.href = area.app.url;
-        app.target = "_blank";
-        app.rel = "noopener";
-        app.innerHTML = "<b></b><span></span><i></i>";
-        app.querySelector("b").textContent = area.app.name;
-        app.querySelector("span").textContent = area.app.note;
-        app.querySelector("i").textContent = area.app.cta || "Get the app ↗";
-        det.insertBefore(app, det.querySelector(".suggestions"));
-      }
+      (area.links || []).forEach(function (link) {
+        var a = document.createElement("a");
+        a.className = "area-app";
+        a.href = link.url;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.innerHTML = "<b></b><span></span><i></i>";
+        a.querySelector("b").textContent = link.name;
+        a.querySelector("span").textContent = link.note;
+        a.querySelector("i").textContent = link.cta || "Get the app ↗";
+        det.insertBefore(a, det.querySelector(".suggestions"));
+      });
       var ul = det.querySelector(".suggestions");
       area.goals.forEach(function (g) {
         var li = document.createElement("li");
@@ -438,8 +438,8 @@
     try { navigator.clipboard.writeText(text).then(function () { status.textContent = okMsg; }, fallback); } catch (e) { fallback(); }
   }
 
-  // The header is fixed to the top; keep the page (and jump links) just below it.
-  var header = document.querySelector(".site-header");
+  // Jump links should land just below the header (its visible part, not the dark top that hangs above the screen).
+  var header = document.querySelector(".site-header .inner");
   if (header) {
     var fitHeader = function () { document.documentElement.style.setProperty("--header-h", header.offsetHeight + "px"); };
     fitHeader();

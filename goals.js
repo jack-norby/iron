@@ -8,7 +8,10 @@ window.AREAS = [
     why: "Everything else on this list is good. This one matters most. Spend time with God every day, keep a verse in your head and stay in a group that asks how it’s really going.",
     verse: { text: "But seek first the kingdom of God and his righteousness, and all these things will be added to you.", ref: "Matthew 6:33" },
     rest: "Stillness, worship and a weekly Sabbath. You don’t have to earn what God already gives.",
-    app: { name: "Sing", note: "A worship devotional from The Worship Initiative. Start your time with God in worship.", url: "https://sing.theworshipinitiative.com/", cta: "Open Sing ↗" },
+    links: [
+      { name: "Spiritual Workout Plan", note: "Cornerstone’s reading plan: this semester’s daily readings, memory verses and the printable PDF.", url: "https://cornerstonelife.com/workout/", cta: "Open the plan ↗" },
+      { name: "Sing", note: "A worship devotional from The Worship Initiative. Start your time with God in worship.", url: "https://sing.theworshipinitiative.com/", cta: "Open Sing ↗" }
+    ],
     goals: [
       { id: "sp-read", label: "Read today’s passage", detail: "The Spiritual Workout Plan reading for the day.", starter: true },
       { id: "sp-pray", label: "Pray for 5 minutes", detail: "Any time of day. Talk to God about what’s actually going on.", starter: true },
@@ -26,7 +29,9 @@ window.AREAS = [
     why: "A tired, run-down body makes everything harder, including following Jesus. Sleep, move, eat real food and get outside.",
     verse: { text: "For you were bought with a price. So glorify God in your body.", ref: "1 Corinthians 6:20" },
     rest: "Sleep, real breaks during the day and an easy day each week. Recovery is when you get stronger.",
-    app: { name: "Ceko", note: "Lift with your gym: track workouts, lifts, runs and food with your friends. Made by a Salt Company leader.", url: "https://apps.apple.com/us/app/ceko-lift-with-your-gym/id6791621489" },
+    links: [
+      { name: "Ceko", note: "Lift with your gym: track workouts, lifts, runs and food with your friends. Made by a Salt Company leader.", url: "https://apps.apple.com/us/app/ceko-lift-with-your-gym/id6791621489" }
+    ],
     goals: [
       { id: "ph-bedtime", label: "Consistent bedtime", detail: "Same time most nights.", starter: true, rest: true },
       { id: "ph-sleep", label: "7+ hours of sleep", detail: "What most adults need (CDC).", rest: true },
@@ -45,8 +50,11 @@ window.AREAS = [
     why: "Your mind gets trained every day by what you watch and scroll. Be picky about what gets in, and plan your days so school doesn’t run you.",
     verse: { text: "Do not be conformed to this world, but be transformed by the renewal of your mind.", ref: "Romans 12:2" },
     rest: "Time when school is done and the screen is off. Your mind needs to be off duty, not just distracted.",
+    links: [
+      { name: "Habits First", note: "A screen-time app that helps you put the important things first and cut down on scrolling.", url: "https://apps.apple.com/us/app/habits-first/id6791076258" }
+    ],
     goals: [
-      { id: "me-screen", label: "Stay under my screen-time limit", detail: "Set a daily limit for social apps and let your phone enforce it.", starter: true },
+      { id: "me-screen", label: "Stay under my screen-time limit", detail: "Set a daily limit for social apps and let Habits First or your phone enforce it.", starter: true },
       { id: "me-plan", label: "Plan tomorrow tonight", detail: "What’s due, where you need to be, your top three tasks." },
       { id: "me-focus", label: "Notifications off while studying", detail: "Check messages on breaks." },
       { id: "me-early", label: "Start assignments early", detail: "Do the first 20 minutes the day you get it." },
@@ -61,6 +69,9 @@ window.AREAS = [
     why: "You need beauty you actually notice and people who actually know you. Neither one happens by accident.",
     verse: { text: "And let us consider how to stir up one another to love and good works, not neglecting to meet together.", ref: "Hebrews 10:24–25" },
     rest: "People and things that fill you back up, not just the ones that need something from you.",
+    links: [
+      { name: "Salt Company connection groups", note: "Not in a group yet? Find one in Ames. It’s the easiest way to be known.", url: "https://saltcompanyames.com/groups/", cta: "Find a group ↗" }
+    ],
     goals: [
       { id: "em-meal", label: "Share a meal with someone", detail: "Eat with someone instead of alone.", starter: true },
       { id: "em-good", label: "Write down one good thing", detail: "One good thing from your day, before bed." },
