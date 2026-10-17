@@ -338,9 +338,10 @@
         app.href = area.app.url;
         app.target = "_blank";
         app.rel = "noopener";
-        app.innerHTML = "<b></b><span></span><i>Get the app ↗</i>";
+        app.innerHTML = "<b></b><span></span><i></i>";
         app.querySelector("b").textContent = area.app.name;
         app.querySelector("span").textContent = area.app.note;
+        app.querySelector("i").textContent = area.app.cta || "Get the app ↗";
         det.insertBefore(app, det.querySelector(".suggestions"));
       }
       var ul = det.querySelector(".suggestions");

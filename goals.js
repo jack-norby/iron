@@ -8,12 +8,14 @@ window.AREAS = [
     why: "Everything else on this list is good. This one matters most. Spend time with God every day, keep a verse in your head and stay in a group that asks how it’s really going.",
     verse: { text: "But seek first the kingdom of God and his righteousness, and all these things will be added to you.", ref: "Matthew 6:33" },
     rest: "Stillness, worship and a weekly Sabbath. You don’t have to earn what God already gives.",
+    app: { name: "Sing", note: "A worship devotional from The Worship Initiative. Start your time with God in worship.", url: "https://sing.theworshipinitiative.com/", cta: "Open Sing ↗" },
     goals: [
       { id: "sp-read", label: "Read today’s passage", detail: "The Spiritual Workout Plan reading for the day.", starter: true },
       { id: "sp-pray", label: "Pray for 5 minutes", detail: "Any time of day. Talk to God about what’s actually going on.", starter: true },
       { id: "sp-verse", label: "Work on the memory verse", detail: "Say this week’s verse out loud a few times." },
       { id: "sp-pray-group", label: "Pray for someone in my group", detail: "One person by name. Text them that you did." },
       { id: "sp-quiet", label: "5 minutes of quiet with God", detail: "No music, no phone. Just be with him.", rest: true },
+      { id: "sp-worship", label: "Worship with Sing", detail: "Today’s worship devotional.", rest: true },
       { id: "sp-serve", label: "Serve someone", detail: "One act of kindness nobody asked for." }
     ]
   },

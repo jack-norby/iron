@@ -40,7 +40,7 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 8px); }
+html { background: var(--paper); scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 8px); }
 /* the header is fixed, so the page starts below it. app.js keeps --header-h exact. */
 :root { --header-h: 58px; }
 @media (max-width: 640px) { :root { --header-h: 96px; } }
@@ -87,13 +87,17 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .eyebrow { margin: 0 0 6px; }
 
 /* ---------- header ---------- */
-body::before {
+/* Behind the clock and battery on iPhones, Safari can draw a strip of page above the header.
+   This extends the header's background up into it, so the header always meets the top of the screen. */
+.site-header::before {
   content: "";
-  position: fixed;
-  inset: 0 0 auto;
-  height: env(safe-area-inset-top, 0px);
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 100vh;
   background: var(--paper);
-  z-index: 20;
+  pointer-events: none;
 }
 .site-header {
   /* fixed, not sticky: iPhone Safari only fills the strip behind the clock with a header that's fixed to the top */
@@ -354,6 +358,14 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
 /* an app we recommend for an area (Ceko for Physical) */
 .area-app { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 4px 14px; margin: 0 16px 16px; padding: 12px 14px; border: 1px solid var(--area, var(--ink)); color: inherit; text-decoration: none; }
 .area-app:hover { background: var(--paper-2); }
+/* Resources: sites worth knowing */
+.site-list { list-style: none; padding: 0; margin: 18px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 640px) { .site-list { grid-template-columns: 1fr; } }
+.site-list a { display: grid; gap: 4px; height: 100%; padding: 14px 16px; border: 1px solid var(--rule); border-top: 3px solid var(--powder); background: var(--paper-2); color: inherit; text-decoration: none; }
+.site-list a:hover { border-color: var(--powder); }
+.site-list b { font-family: var(--cond); font-weight: 600; font-size: 1.3rem; letter-spacing: .03em; text-transform: uppercase; }
+.site-list span { font-size: 1rem; color: var(--muted); font-style: italic; }
+.site-list i { font-style: normal; font-family: var(--mono); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; color: var(--powder); margin-top: 4px; overflow-wrap: anywhere; }
 .area-app b { font-family: var(--cond); font-weight: 600; font-size: 1.15rem; letter-spacing: .04em; text-transform: uppercase; }
 .area-app span { grid-column: 1; font-size: .98rem; color: var(--muted); font-style: italic; }
 .area-app i { grid-column: 2; grid-row: 1 / span 2; font-style: normal; font-family: var(--mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--area, var(--ink)); white-space: nowrap; }
