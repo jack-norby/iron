@@ -438,15 +438,6 @@
     try { navigator.clipboard.writeText(text).then(function () { status.textContent = okMsg; }, fallback); } catch (e) { fallback(); }
   }
 
-  // Jump links should land just below the header (its visible part, not the dark top that hangs above the screen).
-  var header = document.querySelector(".site-header .inner");
-  if (header) {
-    var fitHeader = function () { document.documentElement.style.setProperty("--header-h", header.offsetHeight + "px"); };
-    fitHeader();
-    if (window.ResizeObserver) new ResizeObserver(fitHeader).observe(header);
-    else window.addEventListener("resize", fitHeader);
-  }
-
   // Hooks for account.js (sign-in, syncing and groups) and journal.js.
   var HAS_TRACKER = !!document.getElementById("checklist");
   var listeners = [];
