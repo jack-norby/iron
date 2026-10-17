@@ -2,7 +2,8 @@
 // Set the last line back to null to turn them off. See ACCOUNTS.md.
 //
 // It looks like this (these values are safe to publish; the Firestore
-// security rules in ACCOUNTS.md are what keep everyone's data private):
+// security rules in ACCOUNTS.md are what keep everyone's data private).
+// GitHub's secret scanning flags the apiKey anyway: see step 5 in ACCOUNTS.md.
 //
 // window.IRON_FIREBASE = {
 //   apiKey: "AIza...",

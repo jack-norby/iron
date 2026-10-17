@@ -437,6 +437,15 @@
     try { navigator.clipboard.writeText(text).then(function () { status.textContent = okMsg; }, fallback); } catch (e) { fallback(); }
   }
 
+  // The header is fixed to the top; keep the page (and jump links) just below it.
+  var header = document.querySelector(".site-header");
+  if (header) {
+    var fitHeader = function () { document.documentElement.style.setProperty("--header-h", header.offsetHeight + "px"); };
+    fitHeader();
+    if (window.ResizeObserver) new ResizeObserver(fitHeader).observe(header);
+    else window.addEventListener("resize", fitHeader);
+  }
+
   // Hooks for account.js (sign-in, syncing and groups) and journal.js.
   var HAS_TRACKER = !!document.getElementById("checklist");
   var listeners = [];

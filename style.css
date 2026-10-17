@@ -40,11 +40,15 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 8px); }
+/* the header is fixed, so the page starts below it. app.js keeps --header-h exact. */
+:root { --header-h: 58px; }
+@media (max-width: 640px) { :root { --header-h: 96px; } }
 body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
+  padding-top: var(--header-h);
   font-family: var(--body);
   font-size: 1.15rem;
   line-height: 1.5;
@@ -92,8 +96,11 @@ body::before {
   z-index: 20;
 }
 .site-header {
-  position: sticky;
+  /* fixed, not sticky: iPhone Safari only fills the strip behind the clock with a header that's fixed to the top */
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   padding-top: env(safe-area-inset-top, 0px);
   z-index: 10;
   background: var(--paper);
@@ -115,9 +122,18 @@ body::before {
 .site-header nav { display: flex; gap: 16px; flex-wrap: wrap; }
 .site-header nav a { font-family: var(--mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; padding-block: 4px; border-bottom: 1px solid transparent; }
 .site-header nav a:hover { border-bottom-color: var(--ink); }
+/* phones: Iron and Sign in on one row, the pages in one row you can swipe */
+@media (max-width: 640px) {
+  .site-header .inner { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 6px 12px; padding-block: 8px 6px; }
+  .site-header .brand { font-size: 1.65rem; }
+  .site-header .nav-account { grid-column: 2; grid-row: 1; padding: 6px 10px; }
+  .site-header nav { grid-column: 1 / -1; grid-row: 2; flex-wrap: nowrap; gap: 18px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; margin-right: calc(-1 * var(--gutter-r)); padding-right: var(--gutter-r); }
+  .site-header nav::-webkit-scrollbar { display: none; }
+  .site-header nav a { white-space: nowrap; }
+}
 
 main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
-.section { padding-block: 28px 44px; border-bottom: 1px solid var(--rule); scroll-margin-top: 64px; }
+.section { padding-block: 28px 44px; border-bottom: 1px solid var(--rule); }
 
 /* ---------- the photograph: a dark frame with light coming through ---------- */
 .frame {
@@ -191,7 +207,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
 .link-btn.armed { color: var(--emotional); }
 
 /* ---------- today ---------- */
-.day-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 14px; flex-wrap: wrap; margin: 34px 0 18px; scroll-margin-top: 72px; }
+.day-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 14px; flex-wrap: wrap; margin: 34px 0 18px; }
 .day-head h1 { font-size: clamp(2.4rem, 8vw, 3.6rem); }
 .day-nav { display: flex; gap: 6px; }
 .day-nav button {

@@ -85,6 +85,19 @@ window.IRON_FIREBASE = {
 
 These config values aren't secret. Every Firebase website publishes them. The rules in step 3 are what keep everyone's data private.
 
+## 5. Lock the key to your site (and GitHub's "secret scanning" alert)
+GitHub flags the `apiKey` in `firebase-config.js` as a "Google API Key, public leak." That's expected: a Firebase web key identifies your project and has to be in the page for sign-in to work. It doesn't unlock anyone's data. The Firestore rules handle that, and sign-in only works from your authorized domain. It's still worth making sure the key only works from your site:
+
+1. Go to [console.cloud.google.com](https://console.cloud.google.com), pick the **iron-group** project at the top, then open **APIs & Services → Credentials**.
+2. Under **API keys**, click **Browser key (auto created by Firebase)**, the one starting with `AIzaSyD5MI`.
+3. Under **Application restrictions**, choose **Websites** and add both of these:
+   - `https://jack-norby.github.io/*`
+   - `https://iron-group-a7770.firebaseapp.com/*` (Google sign-in runs through this page, so leave it in)
+4. Leave **API restrictions** on **Don't restrict key**, then click **Save**. It can take about 5 minutes to kick in. Then sign in on the site once to make sure it still works.
+5. Back on GitHub, open the alert and click **Close as → Won't fix**. Add a note like: "Firebase web key. Public by design, restricted to the site, data protected by Firestore rules."
+
+You don't need to change the key or re-upload anything.
+
 ## Starting your group
 1. Sign in, add your name and tap **Start group**.
 2. Tap **Copy invite** and send it to your group. It includes the link and the code.

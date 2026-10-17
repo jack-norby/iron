@@ -47,4 +47,5 @@ Dark, old-film look. Near-black ground (`--paper`), bone-white text (`--ink`; th
 - After changes, check phone width (about 390px) for horizontal overflow, and check the browser console for errors.
 - The owner publishes by uploading the files to the Iron GitHub repo (GitHub Pages). Keep the folder flat.
 - Every page loads `style.css` and the scripts with `?v=<timestamp>`, and the links between pages carry it too. The footer shows "Iron · Version <timestamp>" so the owner can tell which copy is live. Bump all of them together on every release: `sed -i -E "s/\?v=[0-9]+/?v=NEW/g; s/Version [0-9]+/Version NEW/" *.html`.
+- The header is `position: fixed` (not sticky) so iPhone Safari fills the status-bar strip with it. `app.js` measures it into `--header-h`, which sets the body padding and `scroll-padding-top`. On phones the nav is one swipeable row.
 - All three pages load goals.js, plan.js, app.js, firebase-config.js and account.js so the Sign in button and sync work everywhere.
