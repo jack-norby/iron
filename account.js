@@ -125,7 +125,7 @@
         log[k] = have.concat(src[k].filter(function (id) { return have.indexOf(id) === -1; }));
       });
     });
-    return { goals: goals, log: log, journal: mergeJournal(cloud.journal, local.journal), created: cloud.created < local.created ? cloud.created : local.created, welcomed: true };
+    return { goals: goals, log: log, journal: mergeJournal(cloud.journal, local.journal), sabbath: cloud.sabbath !== undefined ? cloud.sabbath : local.sabbath, created: cloud.created < local.created ? cloud.created : local.created, welcomed: true };
   }
   // Journal: keep everything from both sides (lists by item id, days by date).
   function mergeJournal(a, b) {
@@ -384,7 +384,7 @@
 
     var actions = el("div", "btn-row");
     actions.appendChild(button("Copy invite", "btn btn--ghost", function () {
-      var text = "Join " + g.name + " on Iron: " + location.href.split("#")[0] + " (group code " + code + ")";
+      var text = "Join " + g.name + " on Iron: " + location.href.split(/[?#]/)[0] + " (group code " + code + ")";
       try { navigator.clipboard.writeText(text).then(function () { status.textContent = "Invite copied. Paste it in your group chat."; }, function () { status.textContent = text; }); }
       catch (e) { status.textContent = text; }
     }));

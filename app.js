@@ -63,6 +63,9 @@
     return 1;
   }
   function lockedIn(k) { return state.goals.length > 0 && fraction(k) >= 0.8; }
+  // One day a week is for rest (Genesis 2:2–3). Sunday unless they pick another day or none.
+  function sabbathDay() { return state.sabbath === undefined ? 0 : state.sabbath; }
+  function isSabbath(k) { return sabbathDay() !== null && parseKey(k).getDay() === sabbathDay(); }
   function firstDay() {
     var keys = Object.keys(state.log).filter(function (k) { return state.log[k].length; }).sort();
     return keys.length && keys[0] < state.created ? keys[0] : state.created;
@@ -88,6 +91,7 @@
     $("next-day").disabled = selected >= TODAY;
     $("go-today").hidden = selected === TODAY;
     $("welcome").hidden = !!state.welcomed;
+    $("sabbath").hidden = !isSabbath(selected);
 
     var done = doneOn(selected);
     var list = $("checklist");
@@ -201,25 +205,29 @@
   // ---------- progress ----------
   // The numbers shown here are also what group leaders see (never the goals themselves).
   function summary() {
-    // streak: today counts once it's locked in; until then the streak runs through yesterday
+    // streak: today counts once it's locked in; until then the streak runs through yesterday.
+    // A Sabbath never breaks it.
     var streak = 0;
-    for (var k = lockedIn(TODAY) ? TODAY : addDays(TODAY, -1); lockedIn(k); k = addDays(k, -1)) streak++;
+    for (var k = lockedIn(TODAY) ? TODAY : addDays(TODAY, -1); ; k = addDays(k, -1)) {
+      if (lockedIn(k)) streak++;
+      else if (!(isSabbath(k) && k >= firstDay())) break;
+    }
     var best = 0, run = 0, checks = 0, last = "";
     for (var d = firstDay(); d <= TODAY; d = addDays(d, 1)) {
-      if (lockedIn(d)) { run++; best = Math.max(best, run); } else run = 0;
+      if (lockedIn(d)) { run++; best = Math.max(best, run); } else if (!isSabbath(d)) run = 0;
       var n = doneOn(d).length;
       checks += n;
       if (n) last = d;
     }
-    // last 7 days, or fewer for someone who started less than a week ago
-    var span = 0, week = 0;
-    for (var w = 0; w < 7 && addDays(TODAY, -w) >= firstDay(); w++) { week += fraction(addDays(TODAY, -w)); span++; }
-    span = Math.max(span, 1);
+    // last 7 days, or fewer for someone who started less than a week ago. The Sabbath isn't graded.
+    var graded = gradedDays(addDays(TODAY, -6));
+    var span = graded.length, week = 0;
+    graded.forEach(function (g) { week += fraction(g); });
     var areas = {};
     AREAS.forEach(function (a) {
       var ids = state.goals.filter(function (g) { return g.area === a.id; }).map(function (g) { return g.id; });
       var hits = 0;
-      for (var i = 0; i < span; i++) hits += doneOn(addDays(TODAY, -i)).filter(function (x) { return ids.indexOf(x) !== -1; }).length;
+      graded.forEach(function (g) { hits += doneOn(g).filter(function (x) { return ids.indexOf(x) !== -1; }).length; });
       areas[a.id] = ids.length ? Math.round((hits / (ids.length * span)) * 100) : null;
     });
     return {
@@ -230,6 +238,14 @@
     };
   }
 
+  // the days from `from` through today that count toward percentages (not before they started, not the Sabbath)
+  function gradedDays(from) {
+    if (firstDay() > from) from = firstDay();
+    var out = [];
+    for (var d = from; d <= TODAY; d = addDays(d, 1)) if (!isSabbath(d)) out.push(d);
+    return out.length ? out : [TODAY];
+  }
+
   function renderProgress() {
     var s = summary();
     $("stat-streak").textContent = s.streak;
@@ -237,6 +253,7 @@
     $("stat-best").textContent = s.best;
     $("stat-week").textContent = s.week + "%";
     $("stat-checks").textContent = s.checks;
+    $("sabbath-day").value = sabbathDay() === null ? "none" : String(sabbathDay());
     renderCalendar();
     renderAreaBars();
   }
@@ -262,7 +279,8 @@
       b.dataset.key = k;
       b.dataset.lvl = k <= TODAY ? String(level(k)) : "";
       b.disabled = k > TODAY;
-      b.setAttribute("aria-label", parseKey(k).toLocaleDateString(undefined, { month: "long", day: "numeric" }));
+      b.setAttribute("aria-label", parseKey(k).toLocaleDateString(undefined, { month: "long", day: "numeric" }) + (isSabbath(k) ? ", Sabbath" : ""));
+      if (isSabbath(k)) b.classList.add("is-sabbath");
       b.setAttribute("aria-pressed", String(k === selected));
       if (k === TODAY) b.setAttribute("aria-current", "date");
       b.addEventListener("click", function (e) {
@@ -278,17 +296,12 @@
   function renderAreaBars() {
     var box = $("area-bars");
     box.innerHTML = "";
-    var start = addDays(TODAY, -29);
-    if (firstDay() > start) start = firstDay();
-    var days = 0;
-    for (var d = start; d <= TODAY; d = addDays(d, 1)) days++;
+    var graded = gradedDays(addDays(TODAY, -29));
     AREAS.forEach(function (area) {
       var ids = state.goals.filter(function (g) { return g.area === area.id; }).map(function (g) { return g.id; });
       var hits = 0;
-      for (var k = start; k <= TODAY; k = addDays(k, 1)) {
-        hits += doneOn(k).filter(function (x) { return ids.indexOf(x) !== -1; }).length;
-      }
-      var rate = ids.length ? hits / (ids.length * days) : null;
+      graded.forEach(function (k) { hits += doneOn(k).filter(function (x) { return ids.indexOf(x) !== -1; }).length; });
+      var rate = ids.length ? hits / (ids.length * graded.length) : null;
       var row = document.createElement("div");
       row.className = "bar-row area-" + area.id;
       row.innerHTML = '<span class="bar-name"></span><span class="bar"><span></span></span><span class="bar-pct"></span>';
@@ -311,12 +324,14 @@
         '<summary><span class="plate plate-' + area.id + '" aria-hidden="true"></span><span><span class="area-name"></span><span class="area-tag"></span></span></summary>' +
         '<p class="area-why"></p>' +
         '<blockquote class="verse"><p></p><cite></cite></blockquote>' +
+        '<p class="area-rest"><b>Rest</b><span></span></p>' +
         '<ul class="suggestions"></ul>';
       det.querySelector(".area-name").textContent = area.name;
       det.querySelector(".area-tag").textContent = area.tagline;
       det.querySelector(".area-why").textContent = area.why;
       det.querySelector(".verse p").textContent = "“" + area.verse.text + "”";
       det.querySelector(".verse cite").textContent = area.verse.ref;
+      det.querySelector(".area-rest span").textContent = area.rest;
       if (area.app) {
         var app = document.createElement("a");
         app.className = "area-app";
@@ -333,6 +348,7 @@
         var li = document.createElement("li");
         li.innerHTML = '<div><b></b><span></span></div><button type="button" class="toggle"></button>';
         li.querySelector("b").textContent = g.label;
+        if (g.rest) li.querySelector("b").insertAdjacentHTML("beforeend", ' <em class="rest-tag">Rest</em>');
         li.querySelector("div span").textContent = g.detail;
         var btn = li.querySelector(".toggle");
         var sync = function () {
@@ -378,7 +394,7 @@
     return keyOf(start).replace(/-/g, "") + "T" + pad(+p[0]) + pad(+p[1]) + "00";
   }
   function icsEvent(id, title, desc, time, rule) {
-    var url = location.href.split("#")[0];
+    var url = location.href.split(/[?#]/)[0];
     var stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
     return [
       "BEGIN:VEVENT",
@@ -458,6 +474,13 @@
   function syncMonth() { var d = parseKey(selected); viewMonth = new Date(d.getFullYear(), d.getMonth(), 1); }
   $("prev-month").addEventListener("click", function () { viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() - 1, 1); renderCalendar(); });
   $("next-month").addEventListener("click", function () { viewMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1); renderCalendar(); });
+
+  $("sabbath-day").addEventListener("change", function (e) {
+    state.sabbath = e.target.value === "none" ? null : +e.target.value;
+    save();
+    renderDay();
+    renderProgress();
+  });
 
   $("welcome-ok").addEventListener("click", function () { state.welcomed = true; save(); $("welcome").hidden = true; });
 

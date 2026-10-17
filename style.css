@@ -209,6 +209,18 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
 .day-nav button:disabled { opacity: .3; cursor: default; background: transparent; }
 .welcome { background: var(--paper-2); padding: 16px 18px; margin-bottom: 18px; border-left: 3px solid var(--amber); }
 .welcome p { font-size: 1.05rem; }
+/* the Sabbath: shown on your rest day */
+.sabbath { background: rgba(185, 210, 229, .07); border: 1px solid var(--rule); border-left: 3px solid var(--powder); padding: 16px 18px 6px; margin-bottom: 18px; }
+.sabbath .eyebrow { color: var(--powder); margin-bottom: 2px; }
+.sabbath-big { font-family: var(--display); font-size: clamp(2rem, 7vw, 2.8rem); line-height: 1; margin: 0 0 12px; filter: url(#fuzz-sm); }
+.sabbath .verse { border-left-color: var(--powder); }
+.sabbath-pick { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 18px; font-family: var(--mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.sabbath-pick select { padding: 7px 10px; border: 1px solid var(--ink-2); border-radius: 0; background: var(--paper); color: var(--ink); font-family: var(--mono); font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; }
+.cal .is-sabbath, .legend .is-sabbath { border-style: dashed; border-color: var(--powder); }
+.legend .is-sabbath { margin-left: 12px; }
+.rest-tag { display: inline-block; vertical-align: middle; font-style: normal; font-family: var(--mono); font-weight: 400; font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--powder); border: 1px solid var(--powder); padding: 1px 5px; margin-left: 4px; line-height: 1.5; }
+.area-rest { margin: 0 16px 16px; display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; font-size: 1.04rem; }
+.area-rest b { font-family: var(--mono); font-weight: 500; font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--powder); }
 .progress { height: 3px; background: var(--rule); }
 .progress span { display: block; height: 100%; width: 0; background: var(--ink); transition: width .3s ease; }
 .progress-text { margin-top: 8px; font-variant-numeric: tabular-nums; }
@@ -307,7 +319,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
 .bar-pct { text-align: right; font-family: var(--mono); font-size: .74rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 
 /* ---------- goals: four "prints" ---------- */
-#goals > p { font-size: 1.1rem; }
+#goals > p:not(.hint) { font-size: 1.1rem; }
 .area { margin-top: 14px; background: var(--paper-2); border: 1px solid var(--rule); }
 .area summary { cursor: pointer; display: grid; grid-template-columns: 76px 1fr auto; align-items: center; gap: 16px; padding: 12px 16px 12px 12px; list-style: none; }
 .area summary::-webkit-details-marker { display: none; }
@@ -579,7 +591,8 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
 .acct-close { position: absolute; top: 8px; right: 10px; background: none; border: 0; font-size: 1.8rem; line-height: 1; color: var(--ink); cursor: pointer; padding: 4px 8px; }
 
 /* ---------- journal ---------- */
-.frame--journal .frame-photo { object-position: 50% 32%; filter: grayscale(.35) brightness(.8); }
+.frame--journal { min-height: clamp(380px, 60vw, 500px); }
+.frame--journal .frame-photo { object-position: 50% 16%; }
 #month .cal-head { margin-top: 4px; }
 #month .cal-head h2 { margin: 0; text-align: center; }
 .jlists { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; margin-top: 18px; }

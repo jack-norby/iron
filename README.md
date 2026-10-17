@@ -9,6 +9,7 @@ A simple daily tracker for college connection groups. It covers four areas (Spir
 - **Goals**: each area has a short "why," a verse and suggested goals you can add with one tap. You can also add your own.
 - **Connection group**: weekly accountability questions with a button that copies them for the group chat.
 - **Settings**: a backup code to move to another phone, and Start over.
+- **Rest built in**: a weekly Sabbath (Sunday unless you pick another day) that never breaks your streak, a rest side to every area and Rest-tagged goals. The idea comes from *The Power of Full Engagement* and from God resting on the seventh day.
 - **Journal** (`journal.html`): private monthly actions in four lists you can rename (Personal, School, Work, Spiritual), Remember / Gratitude / Prayers and dated entries. It syncs to your account if you're signed in. Leaders never see it.
 - **Resources** (`resources.html`): the gospel in four words (relationship, gap, bridge, freedom), the bridge diagram ("Christ in our place," Romans 6:23) as a step-by-step walkthrough, a 60-second testimony builder, an "ask, listen, share, invite" guide, the Repenter quadrant with next steps.
 
@@ -27,7 +28,7 @@ Without accounts, everything saves in the browser on each person's device.
 | `goals.js` | The four areas, their suggested goals and the group questions (Spiritual Workout Plan + Iron). Edit this to change content. |
 | `plan.js` | The Spiritual Workout Plan readings (Fall 2026). Replace the weeks each semester. |
 | `style.css` | All the styling. Colors and fonts are tokens at the top. |
-| `*.jpg` | The photos (cross in the trees, sword in the light, crucifix, cross on a mountain, runner, dove, raised hands) |
+| `*.jpg` | The photos (cross in the trees, sword in the light, cross-shaped church window, cross on a mountain, runner, dove, raised hands) |
 | `favicon.svg`, `*.png`, `manifest.webmanifest` | The sword icon for the browser tab and home screen |
 | `og-image.jpg` | The picture that shows when someone texts or posts the link |
 

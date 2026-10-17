@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Gloock&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<meta name="description" content="Iron: a daily tracker for spiritual, physical, mental and emotional goals, built for college connection groups. Iron sharpens iron.">
+<meta name="description" content="Iron: daily goals and real rest for spiritual, physical, mental and emotional health, built for college connection groups. Iron sharpens iron.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -18,14 +18,14 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Iron">
 <meta property="og:title" content="Iron">
-<meta property="og:description" content="Daily goals for spiritual, physical, mental and emotional health, built for college connection groups. Iron sharpens iron.">
+<meta property="og:description" content="A rhythm of work and rest for spiritual, physical, mental and emotional health, built for college connection groups. Iron sharpens iron.">
 <meta property="og:url" content="https://jack-norby.github.io/iron/">
 <meta property="og:image" content="https://jack-norby.github.io/iron/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Iron. “Iron sharpens iron, and one man sharpens another.” Proverbs 27:17. A sword against bright light.">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="style.css?v=202610170336">
+<link rel="stylesheet" href="style.css?v=202610170353">
 </head>
 <body>
 <svg class="filters" aria-hidden="true" focusable="false">
@@ -41,8 +41,8 @@
       <a href="#progress">Progress</a>
       <a href="#goals">Goals</a>
       <a href="#group">Group</a>
-      <a href="resources.html">Resources</a>
-      <a href="journal.html">Journal</a>
+      <a href="resources.html?v=202610170353">Resources</a>
+      <a href="journal.html?v=202610170353">Journal</a>
     </nav>
     <button type="button" class="nav-account" id="account-btn" hidden>Sign in</button>
   </div>
@@ -71,8 +71,15 @@
     </div>
 
     <div class="welcome" id="welcome" hidden>
-      <p><b>Welcome.</b> We started you with a few goals in each area, Spiritual first. Check them off each day. Tap × to drop one, or add more under <a href="#goals">Goals</a>.</p>
+      <p><b>Welcome.</b> Iron is about a rhythm of work and rest, not doing more. We started you with a few goals in each area, Spiritual first. Check them off each day, and take your Sabbath off: it never breaks your streak. Tap × to drop a goal, or add more under <a href="#goals">Goals</a>.</p>
       <button type="button" class="btn" id="welcome-ok">Got it</button>
+    </div>
+
+    <div class="sabbath" id="sabbath" hidden>
+      <p class="eyebrow">Sabbath</p>
+      <p class="sabbath-big">Rest today.</p>
+      <blockquote class="verse"><p>“So God blessed the seventh day and made it holy, because on it God rested from all his work that he had done in creation.”</p><cite>Genesis 2:3</cite></blockquote>
+      <p>Nothing on this list is required today, and your streak is safe. Worship, sleep in, eat with people, get outside, do what fills you up. Checking things off is fine too.</p>
     </div>
 
     <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
@@ -101,7 +108,12 @@
       <div><b id="stat-week">0%</b><span>Last 7 days</span></div>
       <div><b id="stat-checks">0</b><span>Check-offs</span></div>
     </div>
-    <p class="hint">A day counts toward your streak when you finish at least 80% of your goals.</p>
+    <p class="hint">A day counts toward your streak when you finish at least 80% of your goals. Your Sabbath never breaks it, and it isn’t part of the percentages.</p>
+    <label class="sabbath-pick">My Sabbath
+      <select id="sabbath-day">
+        <option value="0">Sunday</option><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option><option value="none">No set day</option>
+      </select>
+    </label>
 
     <div class="cal-head">
       <button type="button" id="prev-month" aria-label="Previous month">←</button>
@@ -110,7 +122,7 @@
     </div>
     <div class="cal" id="calendar"></div>
     <div class="legend" aria-hidden="true">
-      <span>Less</span><i data-lvl="0"></i><i data-lvl="1"></i><i data-lvl="2"></i><i data-lvl="3"></i><i data-lvl="4"></i><span>All done</span>
+      <span>Less</span><i data-lvl="0"></i><i data-lvl="1"></i><i data-lvl="2"></i><i data-lvl="3"></i><i data-lvl="4"></i><span>All done</span><i class="is-sabbath" data-lvl="0"></i><span>Sabbath</span>
     </div>
 
     <h3>Last 30 days by area</h3>
@@ -120,7 +132,10 @@
   <!-- GOALS: the four areas, condensed -->
   <section id="goals" class="section">
     <h2>Goals</h2>
-    <p>Four areas, one life. Pick a few goals in each and add them to your daily list. Start small: it’s better to keep three goals than to drop ten.</p>
+    <p>Four areas, one life. Burnout usually isn’t from working hard. It’s from never stopping. So every area has two sides: push, then recover. God built that rhythm into creation: six days of work, then a day of rest.</p>
+    <blockquote class="verse"><p>“Come to me, all who labor and are heavy laden, and I will give you rest.”</p><cite>Matthew 11:28</cite></blockquote>
+    <p>Pick a few goals in each area, including at least one marked <em class="rest-tag">Rest</em>. Start small: it’s better to keep three goals than to drop ten.</p>
+    <p class="hint">The idea of training all four areas, with rest built in, comes from <i>The Power of Full Engagement</i> by Jim Loehr and Tony Schwartz.</p>
     <div id="areas"></div>
   </section>
 
@@ -145,7 +160,7 @@
     </div>
     <div class="btn-row">
       <button type="button" class="btn" id="copy-questions">Copy questions</button>
-      <a class="btn btn--light" href="resources.html#repent">Repenter quadrant</a>
+      <a class="btn btn--light" href="resources.html?v=202610170353#repent">Repenter quadrant</a>
     </div>
     <p class="status" id="copy-status" role="status"></p>
     <textarea id="questions-text" class="visually-hidden" aria-hidden="true" tabindex="-1"></textarea>
@@ -198,13 +213,14 @@
 
 <footer class="site-footer">
   <p>Made for college connection groups. Readings from Cornerstone’s <a href="https://cornerstonelife.com/workout/" target="_blank" rel="noopener">Spiritual Workout Plan</a>.</p>
+  <p class="fine build">Iron · Version 202610170353</p>
   <p class="fine">Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), © 2001 by Crossway, a publishing ministry of Good News Publishers. Used by permission. All rights reserved.</p>
 </footer>
 
-<script src="goals.js?v=202610170336"></script>
-<script src="plan.js?v=202610170336"></script>
-<script src="app.js?v=202610170336"></script>
-<script src="firebase-config.js?v=202610170336"></script>
-<script src="account.js?v=202610170336"></script>
+<script src="goals.js?v=202610170353"></script>
+<script src="plan.js?v=202610170353"></script>
+<script src="app.js?v=202610170353"></script>
+<script src="firebase-config.js?v=202610170353"></script>
+<script src="account.js?v=202610170353"></script>
 </body>
 </html>
