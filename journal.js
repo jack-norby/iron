@@ -1,5 +1,5 @@
-/* Iron journal: a monthly log (one-line highlight per day + up to 3 habits),
-   the month's actions, Remember / Gratitude / Prayers pages, and dated entries.
+/* Iron journal: the month's actions (four lists), Remember / Gratitude /
+   Prayers pages, and dated entries.
    Stored in the same saved data as the tracker (state.journal), so it syncs to
    your account. It is never shared with group leaders. */
 (function () {
@@ -8,7 +8,6 @@
   var I = window.Iron;
   if (!I) return;
   var $ = function (id) { return document.getElementById(id); };
-  var DOW = ["S", "M", "T", "W", "T", "F", "S"];
   var now = new Date();
   var view = new Date(now.getFullYear(), now.getMonth(), 1);
 
@@ -35,19 +34,22 @@
     s.journal.months = s.journal.months || {};
     return s.journal;
   }
-  // A new month starts with last month's habits and list titles (not the items).
+  // A new month starts with last month's list names (not the items). Every month has four lists.
+  // Months saved by the first version may also hold daily highlights; they're left alone.
+  var DEFAULT_LISTS = ["Personal", "School", "Work", "Spiritual"];
   function month(key) {
     var j = journal();
     if (!j.months[key]) {
       var prev = Object.keys(j.months).sort().filter(function (k) { return k < key; }).pop();
-      var p = prev ? j.months[prev] : null;
-      j.months[key] = {
-        habits: p ? p.habits.slice() : ["", "", ""],
-        days: {},
-        lists: p ? p.lists.map(function (l) { return { title: l.title, items: [] }; }) : [{ title: "Personal", items: [] }, { title: "School", items: [] }]
-      };
+      j.months[key] = { lists: prev ? j.months[prev].lists.map(function (l) { return { title: l.title, items: [] }; }) : [] };
     }
-    return j.months[key];
+    var m = j.months[key];
+    m.lists = m.lists || [];
+    DEFAULT_LISTS.forEach(function (name) {
+      if (m.lists.length >= 4) return;
+      if (!m.lists.some(function (l) { return l.title.trim().toLowerCase() === name.toLowerCase(); })) m.lists.push({ title: name, items: [] });
+    });
+    return m;
   }
   function change(fn) { I.update(function () { fn(journal()); }); }
   var timers = {};
@@ -56,87 +58,15 @@
     timers[key] = setTimeout(function () { change(fn); }, 600);
   }
 
-  // ---------- monthly log ----------
-  var CYCLE = { "": "done", done: "miss", miss: "" };
+  // ---------- which month ----------
   function renderMonth() {
-    var key = monthKey(view);
-    var m = month(key);
-    var days = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
-    var isNow = key === monthKey(now);
-    $("month-name").textContent = view.toLocaleDateString(undefined, { month: "long", year: "numeric" });
-    $("actions-title").textContent = "Actions for " + view.toLocaleDateString(undefined, { month: "long" });
+    var isNow = monthKey(view) === monthKey(now);
+    $("actions-title").textContent = view.toLocaleDateString(undefined, isNow ? { month: "long" } : { month: "long", year: "numeric" });
     $("next-month").disabled = isNow;
-
-    // habit names
-    m.habits.forEach(function (h, i) {
-      var input = $("habit-" + i);
-      input.value = h;
-    });
-
-    var log = $("log");
-    log.innerHTML = "";
-    var head = el("div", "jrow jhead");
-    head.appendChild(el("span", "jday", "Day"));
-    head.appendChild(el("span", "jhi-label", "Highlight"));
-    m.habits.forEach(function (h, i) {
-      var letter = el("span", "jletter", h ? h.trim().charAt(0).toUpperCase() : String(i + 1));
-      letter.title = h || "Habit " + (i + 1);
-      head.appendChild(letter);
-    });
-    log.appendChild(head);
-
-    for (var d = 1; d <= days; d++) {
-      var date = new Date(view.getFullYear(), view.getMonth(), d);
-      var row = el("div", "jrow" + (isNow && d === now.getDate() ? " is-today" : "") + (isNow && d > now.getDate() ? " is-future" : ""));
-      var label = el("span", "jday");
-      label.appendChild(el("b", "", String(d)));
-      label.appendChild(el("i", "", DOW[date.getDay()]));
-      row.appendChild(label);
-      var day = m.days[d] || {};
-      var hi = el("input", "jhi");
-      hi.type = "text";
-      hi.maxLength = 120;
-      hi.value = day.hi || "";
-      hi.placeholder = isNow && d === now.getDate() ? "What made today memorable?" : "";
-      hi.setAttribute("aria-label", date.toLocaleDateString(undefined, { month: "long", day: "numeric" }) + " highlight");
-      (function (dd, input) {
-        input.addEventListener("input", function () {
-          changeLater("hi" + key + dd, function () {
-            var mm = month(key);
-            mm.days[dd] = mm.days[dd] || {};
-            mm.days[dd].hi = input.value;
-          });
-        });
-      })(d, hi);
-      row.appendChild(hi);
-      for (var h = 0; h < 3; h++) {
-        var marks = day.h || [];
-        var cell = el("button", "jh");
-        cell.type = "button";
-        cell.dataset.state = marks[h] || "";
-        cell.setAttribute("aria-label", (m.habits[h] || "Habit " + (h + 1)) + ", day " + d + ": " + (marks[h] === "done" ? "done" : marks[h] === "miss" ? "missed" : "not marked"));
-        (function (dd, hh, button) {
-          button.addEventListener("click", function () {
-            var next = CYCLE[button.dataset.state || ""];
-            button.dataset.state = next;
-            button.setAttribute("aria-label", (m.habits[hh] || "Habit " + (hh + 1)) + ", day " + dd + ": " + (next === "done" ? "done" : next === "miss" ? "missed" : "not marked"));
-            change(function () {
-              var mm = month(key);
-              mm.days[dd] = mm.days[dd] || {};
-              var arr = mm.days[dd].h || ["", "", ""];
-              arr[hh] = next;
-              mm.days[dd].h = arr;
-            });
-          });
-        })(d, h, cell);
-        row.appendChild(cell);
-      }
-      log.appendChild(row);
-    }
     renderActions();
   }
 
-  // ---------- this month's actions (two lists) ----------
+  // ---------- this month's actions (four lists) ----------
   function renderActions() {
     var key = monthKey(view);
     var m = month(key);
@@ -144,21 +74,25 @@
     box.innerHTML = "";
     m.lists.forEach(function (list, li) {
       var col = el("div", "jlist");
+      var head = el("label", "jlist-head");
       var title = el("input", "jlist-title");
       title.type = "text";
-      title.maxLength = 30;
+      title.maxLength = 24;
       title.value = list.title;
-      title.setAttribute("aria-label", "List name");
+      title.placeholder = "Name this list";
+      title.setAttribute("aria-label", "List " + (li + 1) + " name");
       title.addEventListener("input", function () {
         changeLater("title" + key + li, function () { month(key).lists[li].title = title.value; });
       });
-      col.appendChild(title);
+      head.appendChild(title);
+      head.appendChild(el("span", "jlist-count", list.items.length ? list.items.filter(function (x) { return x.done; }).length + "/" + list.items.length : "Rename"));
+      col.appendChild(head);
       var ul = el("ul", "jitems");
       list.items.forEach(function (item) {
         ul.appendChild(itemRow(item, function () { return month(key).lists[li].items; }, renderActions));
       });
       col.appendChild(ul);
-      col.appendChild(addForm("Add an action", function (text) {
+      col.appendChild(addForm("Add to " + (list.title.trim() || "list " + (li + 1)), function (text) {
         change(function () { month(key).lists[li].items.push({ id: uid(), t: text, done: false }); });
         renderActions();
       }));
@@ -285,15 +219,6 @@
   }
 
   // ---------- wire up ----------
-  [0, 1, 2].forEach(function (i) {
-    $("habit-" + i).addEventListener("input", function (e) {
-      var v = e.target.value;
-      var key = monthKey(view);
-      changeLater("habit" + key + i, function () { month(key).habits[i] = v; });
-      var letter = document.querySelectorAll("#log .jhead .jletter")[i];
-      if (letter) letter.textContent = v.trim() ? v.trim().charAt(0).toUpperCase() : String(i + 1);
-    });
-  });
   $("prev-month").addEventListener("click", function () { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); renderMonth(); });
   $("next-month").addEventListener("click", function () { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderMonth(); });
 

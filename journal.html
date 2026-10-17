@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Gloock&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=202610170336">
 </head>
 <body>
 <svg class="filters" aria-hidden="true" focusable="false">
@@ -59,10 +59,9 @@
     <div class="res-intro">
       <p class="eyebrow">Journal</p>
       <h1>Write it down.</h1>
-      <p>Your memory is shorter than you think. Write one line a day, track a few habits and keep your prayers somewhere you’ll see them answered. Skip a day? No big deal. Fill it in later.</p>
+      <p>Your memory is shorter than you think. Plan the month, write down what you’re thankful for and keep your prayers somewhere you’ll see them answered.</p>
       <p class="hint">Your journal is private. If you’re signed in it saves to your account, and group leaders can never see it.</p>
       <div class="jump-links">
-        <a href="#month">This month</a>
         <a href="#actions-sec">Actions</a>
         <a href="#pages">Remember · Gratitude · Prayers</a>
         <a href="#entries-sec">Entries</a>
@@ -70,29 +69,15 @@
     </div>
   </section>
 
-  <!-- MONTHLY LOG -->
-  <section class="section" id="month">
-    <p class="eyebrow">Monthly log</p>
-    <div class="cal-head">
-      <button type="button" id="prev-month" aria-label="Previous month">←</button>
-      <h2 id="month-name">Month</h2>
-      <button type="button" id="next-month" aria-label="Next month">→</button>
-    </div>
-    <p>One line a day: the highlight, the thing that made that day that day. Then mark up to three habits. Tap once for done, twice for missed.</p>
-    <div class="jhabits">
-      <label><span>1</span><input id="habit-0" type="text" maxlength="30" placeholder="e.g. Wake up on time"></label>
-      <label><span>2</span><input id="habit-1" type="text" maxlength="30" placeholder="e.g. Move"></label>
-      <label><span>3</span><input id="habit-2" type="text" maxlength="30" placeholder="e.g. Read my Bible"></label>
-    </div>
-    <div class="jlog" id="log"></div>
-    <p class="hint">Keep it to three habits. Small, doable and every day beats ten you drop by week two.</p>
-  </section>
-
   <!-- ACTIONS -->
   <section class="section" id="actions-sec">
-    <p class="eyebrow">This month</p>
-    <h2 id="actions-title">Actions</h2>
-    <p>The few things you want to get done this month. Rename the lists to whatever fits, like Personal and School.</p>
+    <p class="eyebrow">Actions</p>
+    <div class="cal-head">
+      <button type="button" id="prev-month" aria-label="Previous month">←</button>
+      <h2 id="actions-title">This month</h2>
+      <button type="button" id="next-month" aria-label="Next month">→</button>
+    </div>
+    <p>The few things you want to get done this month, in four lists. Tap a list’s name to rename it. Next month starts with the same lists.</p>
     <div class="jlists" id="actions"></div>
   </section>
 
@@ -134,11 +119,11 @@
   <p class="fine">Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), © 2001 by Crossway, a publishing ministry of Good News Publishers. Used by permission. All rights reserved.</p>
 </footer>
 
-<script src="goals.js"></script>
-<script src="plan.js"></script>
-<script src="app.js"></script>
-<script src="firebase-config.js"></script>
-<script src="account.js"></script>
-<script src="journal.js"></script>
+<script src="goals.js?v=202610170336"></script>
+<script src="plan.js?v=202610170336"></script>
+<script src="app.js?v=202610170336"></script>
+<script src="firebase-config.js?v=202610170336"></script>
+<script src="account.js?v=202610170336"></script>
+<script src="journal.js?v=202610170336"></script>
 </body>
 </html>
