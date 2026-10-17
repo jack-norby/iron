@@ -249,7 +249,8 @@
     status.textContent = "Joining…";
     return ref.get().then(function (snap) {
       if (!snap.exists) { status.textContent = "No group with that code. Double-check it with your leader."; return; }
-      return ref.update({ members: firebase.firestore.FieldValue.arrayUnion(user.uid) })
+      var already = (snap.data().members || []).indexOf(user.uid) !== -1;
+      return (already ? Promise.resolve() : ref.update({ members: firebase.firestore.FieldValue.arrayUnion(user.uid) }))
         .then(function () { return addMyGroup(code); })
         .then(loadGroups);
     }).catch(function (err) { status.textContent = friendly(err); });
@@ -496,6 +497,10 @@
       firebase.initializeApp(cfg);
       auth = firebase.auth();
       db = firebase.firestore();
+      if (cfg.useEmulators) { // local testing only (see ACCOUNTS.md); never set on the live site
+        auth.useEmulator("http://127.0.0.1:9099");
+        db.useEmulator("127.0.0.1", 8089);
+      }
       auth.onAuthStateChanged(function (u) { if (u) connect(u); else disconnect(); });
     })
     .catch(function () {

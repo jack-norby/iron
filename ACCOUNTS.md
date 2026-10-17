@@ -90,5 +90,8 @@ These config values aren't secret. Every Firebase website publishes them. The ru
 2. Tap **Copy invite** and send it to your guys. It includes the link and the code.
 3. When your co-counselor joins, tap **Make leader** next to his name.
 
+## Testing locally (optional)
+Adding `useEmulators: true` to the config points the site at the local Firebase emulators (Auth on port 9099, Firestore on 8089) instead of the live project. Never set it on the live site.
+
 ## Privacy
 Signing in stores each person's email and name in your Firebase project, and only the project owners can see them. Leaders see the progress numbers described above, never anyone's goals. Delete someone's data from the Firebase console if they ask.
