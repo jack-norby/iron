@@ -4,26 +4,43 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Lock In</title>
+<meta name="theme-color" content="#ebe5d8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Gloock&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <meta name="description" content="A simple daily tracker for physical, mental, emotional and spiritual goals, built for college connection groups.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<svg class="filters" aria-hidden="true" focusable="false">
+  <filter id="fuzz" x="-4%" y="-12%" width="108%" height="124%"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="fuzz-sm" x="-4%" y="-12%" width="108%" height="124%"><feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/></filter>
+</svg>
 
 <header class="site-header">
-  <a class="brand" href="#today">Lock In</a>
-  <nav aria-label="Sections">
-    <a href="#today">Today</a>
-    <a href="#progress">Progress</a>
-    <a href="#goals">Goals</a>
-    <a href="#group">Group</a>
-  </nav>
+  <div class="inner">
+    <a class="brand" href="#today">Lock In</a>
+    <nav aria-label="Sections">
+      <a href="#today">Today</a>
+      <a href="#progress">Progress</a>
+      <a href="#goals">Goals</a>
+      <a href="#group">Group</a>
+      <a href="resources.html">Resources</a>
+    </nav>
+  </div>
 </header>
 
 <main>
 
   <!-- TODAY: the daily checklist -->
   <section id="today" class="section">
-    <div class="day-head">
+    <div class="frame" aria-label="Seek first the kingdom of God and his righteousness. Matthew 6:33">
+      <img class="frame-photo" src="cross-trees.jpg" alt="" width="640" height="717">
+      <p class="verse-big">“Seek first the kingdom of God and his righteousness.”</p>
+      <div class="frame-meta"><span>Matthew 6:33</span><span><b id="hero-streak">0</b> day streak</span></div>
+    </div>
+
+    <div class="day-head" id="day">
       <div>
         <p class="eyebrow" id="day-label">Today</p>
         <h1 id="day-title">Today</h1>
@@ -94,7 +111,10 @@
     <h2>Connection group</h2>
     <p>Go through these together once a week. First round, give a quick one- or two-sentence answer to each. Then go back to whatever needs more time.</p>
     <ol class="questions" id="questions"></ol>
-    <button type="button" class="btn" id="copy-questions">Copy questions</button>
+    <div class="btn-row">
+      <button type="button" class="btn" id="copy-questions">Copy questions</button>
+      <a class="btn btn--light" href="resources.html#repent">Repenter quadrant</a>
+    </div>
     <p class="status" id="copy-status" role="status"></p>
     <textarea id="questions-text" class="visually-hidden" aria-hidden="true" tabindex="-1"></textarea>
   </section>

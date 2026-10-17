@@ -206,6 +206,7 @@
     var week = 0;
     for (var w = 0; w < 7; w++) week += fraction(addDays(TODAY, -w));
     $("stat-streak").textContent = streak;
+    $("hero-streak").textContent = streak;
     $("stat-best").textContent = best;
     $("stat-week").textContent = Math.round((week / 7) * 100) + "%";
     $("stat-checks").textContent = checks;
@@ -241,7 +242,7 @@
         selected = e.currentTarget.dataset.key;
         renderDay();
         renderCalendar();
-        $("today").scrollIntoView({ behavior: "smooth", block: "start" });
+        $("day").scrollIntoView({ behavior: "smooth", block: "start" });
       });
       cal.appendChild(b);
     }
@@ -280,7 +281,7 @@
       det.className = "area area-" + area.id;
       det.open = i === 0;
       det.innerHTML =
-        '<summary><span class="area-name"></span><span class="area-tag"></span></summary>' +
+        '<summary><span class="plate plate-' + area.id + '" aria-hidden="true"></span><span><span class="area-name"></span><span class="area-tag"></span></span></summary>' +
         '<p class="area-why"></p>' +
         '<blockquote class="verse"><p></p><cite></cite></blockquote>' +
         '<ul class="suggestions"></ul>';
@@ -322,7 +323,7 @@
     QUESTIONS.forEach(function (x) {
       var li = document.createElement("li");
       li.innerHTML = "<b></b> <span></span>";
-      li.querySelector("b").textContent = x.q + ":";
+      li.querySelector("b").textContent = x.q;
       li.querySelector("span").textContent = x.a;
       ol.appendChild(li);
     });

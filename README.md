@@ -7,17 +7,20 @@ A simple daily tracker for college connection groups. It covers four areas (Spir
 - **Goals**: each area has a short "why," a verse and suggested goals you can add with one tap. You can also add your own.
 - **Connection group**: weekly accountability questions with a button that copies them for the group chat.
 - **Settings**: a backup code to move to another phone, and Start over.
+- **Resources** (`resources.html`): the gospel in four words, the bridge diagram ("Christ in our place," Romans 6:23) as a step-by-step walkthrough, a 60-second testimony builder, an "ask, listen, share, invite" guide, the Repenter quadrant with next steps, and books and podcasts to go deeper.
 
 Everything saves in the browser on each person's device. There's no sign-in yet.
 
 ## Files
 | File | What it is |
 | --- | --- |
-| `index.html` | The page |
+| `index.html` | The main page |
+| `resources.html`, `resources.js` | The resources page and its interactive parts |
 | `app.js` | All the logic (checklist, calendar, stats, backup) |
 | `goals.js` | The four areas, their suggested goals and the group questions. Edit this to change content. |
 | `plan.js` | The Spiritual Workout Plan readings (Fall 2026). Replace the weeks each semester. |
-| `style.css` | Placeholder styles. Colors, fonts and spacing are tokens at the top, so the real design can drop in. |
+| `style.css` | All the styling. Colors and fonts are tokens at the top. |
+| `*.jpg` | The photos (cross in the trees, crucifix, horse, dove, raised hands) |
 
 ## Run it
 Open `index.html`, or serve the folder with `python3 -m http.server`. To host it, put these files at the root of a GitHub repo and turn on GitHub Pages (Settings → Pages → `main` branch, root).

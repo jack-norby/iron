@@ -64,6 +64,7 @@ window.AREAS = [
 window.GROUP_QUESTIONS = [
   { q: "Spiritual", a: "How was your time with God this week? Did you do the reading and learn the verse?" },
   { q: "Into the light", a: "What sin or temptation do you need to bring into the light?" },
+  { q: "Repenter check", a: "Did you confess fast and full this week, or did you hide it, try to fix it alone or just talk about it?" },
   { q: "Physical", a: "How did sleep, exercise and eating go?" },
   { q: "Mental", a: "Where did your time and attention go? Anything running you?" },
   { q: "Emotional", a: "What was good this week? What’s weighing on you?" },
