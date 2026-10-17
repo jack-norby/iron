@@ -64,9 +64,9 @@
     repenter: {
       name: "Repenter",
       axes: "Confess + Action",
-      what: "You bring sin into the light quickly and completely, then actually turn. You confess to God and to a brother, and you take real steps.",
+      what: "You bring sin into the light quickly and completely, then actually turn. You confess to God and to a friend, and you take real steps.",
       driver: "Faith: you trust Jesus more than your comfort or your control.",
-      next: "Keep going. Confess fast (set a time limit) and full (the whole truth), and help a brother do the same.",
+      next: "Keep going. Confess fast (set a time limit) and full (the whole truth), and help a friend do the same.",
       verse: "“Therefore, confess your sins to one another and pray for one another, that you may be healed.” James 5:16"
     },
     talker: {
@@ -82,7 +82,7 @@
       axes: "Conceal + Apathy",
       what: "You keep it hidden and stay stuck. The longer it stays in the dark, the heavier the shame gets.",
       driver: "Fear: of being known and of what people will think.",
-      next: "Tell one brother today. Sin loses a lot of its power the moment it’s said out loud.",
+      next: "Tell one friend today. Sin loses a lot of its power the moment it’s said out loud.",
       verse: "“Whoever conceals his transgressions will not prosper, but he who confesses and forsakes them will obtain mercy.” Proverbs 28:13"
     },
     fixer: {
@@ -90,7 +90,7 @@
       axes: "Conceal + Action",
       what: "You try to fix it alone with willpower, rules and new systems, without telling anyone.",
       driver: "Pride and fear: you move toward control, not toward Christ.",
-      next: "You can’t white-knuckle your way clean. Confess it, receive grace and let your brothers carry it with you.",
+      next: "You can’t white-knuckle your way clean. Confess it, receive grace and let your group carry it with you.",
       verse: "“Come to me, all who labor and are heavy laden, and I will give you rest.” Matthew 11:28"
     }
   };

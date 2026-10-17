@@ -1,6 +1,6 @@
 # Iron
 
-> “Iron sharpens iron, and one man sharpens another.” Proverbs 27:17
+> “Iron sharpens iron.” Proverbs 27:17
 
 A simple daily tracker for college connection groups. It covers four areas (Spiritual first, then Physical, Mental and Emotional) on one page.
 

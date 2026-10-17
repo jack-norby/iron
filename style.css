@@ -93,7 +93,8 @@ body::before {
 }
 .site-header {
   position: sticky;
-  top: env(safe-area-inset-top, 0px);
+  top: 0;
+  padding-top: env(safe-area-inset-top, 0px);
   z-index: 10;
   background: var(--paper);
   border-bottom: 1px solid var(--rule);

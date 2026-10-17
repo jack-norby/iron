@@ -1,8 +1,8 @@
 # Iron: notes for Claude
 
-"Iron sharpens iron, and one man sharpens another." (Proverbs 27:17)
+"Iron sharpens iron." (Proverbs 27:17)
 
-Iron is a static website (plain HTML/CSS/JS, no build step) for college connection groups at Cornerstone Church in Ames, Iowa. Each guy tracks daily goals across four areas, Spiritual first, then Physical, Mental and Emotional. Leaders can run groups and see their guys' progress. The owner is a college student who leads a connection group with a co-counselor.
+Iron is a static website (plain HTML/CSS/JS, no build step) for college connection groups at Cornerstone Church in Ames, Iowa. Each member tracks daily goals across four areas, Spiritual first, then Physical, Mental and Emotional. Leaders can run groups and see their members' progress. The owner is a college student who leads a connection group with a co-counselor.
 
 **The point is rest, not doing more.** Accountability matters, but the owner built Iron after burning out from striving. Adding rest to each of the four areas helped, an idea from *The Power of Full Engagement* (Jim Loehr and Tony Schwartz): push, then recover, in every area. It's modeled on creation: God worked six days and rested on the seventh (Genesis 2:2–3). New features should never make someone feel behind for resting.
 
@@ -37,6 +37,8 @@ Dark, old-film look. Near-black ground (`--paper`), bone-white text (`--ink`; th
 
 ## Content rules
 - Scripture is ESV. Keep the Crossway copyright notice in the footer and quote verses accurately.
+- Wording works for guys' and girls' groups alike: "friend" or "someone in your group," never "brother," "guys" or "he." Proverbs 27:17 is quoted only as "Iron sharpens iron" so the ESV stays word for word without "one man sharpens another."
+- No citations of internal church meetings or handouts on the site.
 - Example goals stay general. Don't use the owner's personal goals (no specific times, diets, names or relationships).
 - The Spiritual Workout Plan is Cornerstone's (cornerstonelife.com/workout). The site links to it and is a fan-made tool, not an official church resource.
 

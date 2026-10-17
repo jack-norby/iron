@@ -3,9 +3,9 @@
 Iron works without accounts: each person's goals and check-ins save on their own phone. Turn on accounts and people can sign in with Google or email, their tracker follows them to any device, and you can run **groups**:
 
 - A leader starts a group and gets a 6-character code.
-- Guys join with the code.
+- Members join with the code.
 - A leader can make someone else a leader (your co-counselor).
-- Leaders see each guy's streak, today's progress, last 7 days, how each area is going and when he last checked in. **Leaders never see anyone's actual goals.** Anyone who hasn't checked in for 3+ days is flagged so you know who to reach out to.
+- Leaders see each member's streak, today's progress, last 7 days, how each area is going and when they last checked in. **Leaders never see anyone's actual goals.** Anyone who hasn't checked in for 3+ days is flagged so you know who to reach out to.
 
 Accounts use **Firebase**, Google's free service for sign-in and storage. The free plan covers far more than a few connection groups will ever use. Setup takes about 10 minutes and you only do it once.
 
@@ -87,8 +87,8 @@ These config values aren't secret. Every Firebase website publishes them. The ru
 
 ## Starting your group
 1. Sign in, add your name and tap **Start group**.
-2. Tap **Copy invite** and send it to your guys. It includes the link and the code.
-3. When your co-counselor joins, tap **Make leader** next to his name.
+2. Tap **Copy invite** and send it to your group. It includes the link and the code.
+3. When your co-counselor joins, tap **Make leader** next to their name.
 
 ## Testing locally (optional)
 Adding `useEmulators: true` to the config points the site at the local Firebase emulators (Auth on port 9099, Firestore on 8089) instead of the live project. Never set it on the live site.

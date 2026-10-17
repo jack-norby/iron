@@ -348,7 +348,7 @@
       joinGroup(join.querySelector("input").value, join.querySelector(".status"));
     });
     var start = el("form", "crew-form");
-    start.innerHTML = '<label for="new-group">Leading a group? <span>start one and share the code</span></label><div class="add-row"><input id="new-group" type="text" maxlength="40" placeholder="e.g. Tuesday night guys"><button class="btn btn--ghost" type="submit">Start group</button></div><p class="status" role="status"></p>';
+    start.innerHTML = '<label for="new-group">Leading a group? <span>start one and share the code</span></label><div class="add-row"><input id="new-group" type="text" maxlength="40" placeholder="e.g. Tuesday night group"><button class="btn btn--ghost" type="submit">Start group</button></div><p class="status" role="status"></p>';
     start.addEventListener("submit", function (e) {
       e.preventDefault();
       var v = start.querySelector("input").value.trim();
@@ -391,7 +391,7 @@
 
     if (leader) {
       var list = el("div", "crew-members");
-      list.appendChild(el("p", "hint", "Loading your guys…"));
+      list.appendChild(el("p", "hint", "Loading your group…"));
       card.appendChild(list);
       actions.appendChild(button("Refresh", "btn btn--ghost", function () { loadMembers(code, list, status); }));
       loadMembers(code, list, status);
