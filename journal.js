@@ -1,5 +1,4 @@
-/* Iron journal: the month's actions (four lists), Remember / Gratitude /
-   Prayers pages, and dated entries.
+/* This month's actions (four lists) and the prayer and thanks lists, on the main page.
    Stored in the same saved data as the tracker (state.journal), so it syncs to
    your account. It is never shared with group leaders. */
 (function () {
@@ -61,8 +60,8 @@
   // ---------- which month ----------
   function renderMonth() {
     var isNow = monthKey(view) === monthKey(now);
-    $("actions-title").textContent = view.toLocaleDateString(undefined, isNow ? { month: "long" } : { month: "long", year: "numeric" });
-    $("next-month").disabled = isNow;
+    $("plan-title").textContent = view.toLocaleDateString(undefined, isNow ? { month: "long" } : { month: "long", year: "numeric" });
+    $("plan-next").disabled = isNow;
     renderActions();
   }
 
@@ -154,11 +153,11 @@
     return f;
   }
 
-  // ---------- Remember / Gratitude / Prayers ----------
+  // ---------- prayers and thanks ----------
+  // (The first version also had a Remember list and free-form entries. They stay saved but aren't shown.)
   var PAGES = [
-    { key: "remember", el: "page-remember", placeholder: "A truth or verse" },
-    { key: "gratitude", el: "page-gratitude", placeholder: "I’m thankful for…" },
-    { key: "prayers", el: "page-prayers", placeholder: "Pray for…" }
+    { key: "prayers", el: "page-prayers", placeholder: "Pray for…" },
+    { key: "gratitude", el: "page-gratitude", placeholder: "I’m thankful for…" }
   ];
   function renderPages() {
     PAGES.forEach(function (p) {
@@ -166,7 +165,7 @@
       box.innerHTML = "";
       var items = journal()[p.key];
       var ul = el("ul", "jitems");
-      if (!items.length) ul.appendChild(el("li", "jempty", p.key === "prayers" ? "Write down prayers, then mark them answered when God answers." : "Nothing here yet."));
+      if (!items.length) ul.appendChild(el("li", "jempty", p.key === "prayers" ? "Write down who and what you’re praying for. Check it off when God answers." : "Small things count."));
       items.forEach(function (item) {
         var extra = null;
         if (p.key === "prayers") {
@@ -193,49 +192,11 @@
     });
   }
 
-  // ---------- entries ----------
-  function renderEntries() {
-    var list = $("entries");
-    list.innerHTML = "";
-    var items = journal().entries.slice().sort(function (a, b) { return (b.date + b.time).localeCompare(a.date + a.time); });
-    if (!items.length) list.appendChild(el("p", "jempty", "No entries yet. Write when something’s on your mind: a sermon, a prayer, a decision you’re weighing."));
-    items.forEach(function (e) {
-      var card = el("article", "jentry");
-      var meta = el("p", "jentry-meta");
-      meta.appendChild(el("b", "", e.type));
-      meta.appendChild(document.createTextNode(" · " + shortDate(e.date) + " · " + e.time));
-      card.appendChild(meta);
-      card.appendChild(el("p", "jentry-text", e.text));
-      var rm = el("button", "link-btn", "Delete");
-      rm.type = "button";
-      rm.addEventListener("click", function () {
-        if (!rm.classList.contains("armed")) { rm.classList.add("armed"); rm.textContent = "Tap again to delete"; return; }
-        change(function (j) { j.entries = j.entries.filter(function (x) { return x.id !== e.id; }); });
-        renderEntries();
-      });
-      card.appendChild(rm);
-      list.appendChild(card);
-    });
-  }
-
   // ---------- wire up ----------
-  $("prev-month").addEventListener("click", function () { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); renderMonth(); });
-  $("next-month").addEventListener("click", function () { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderMonth(); });
+  $("plan-prev").addEventListener("click", function () { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); renderMonth(); });
+  $("plan-next").addEventListener("click", function () { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderMonth(); });
 
-  $("entry-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    var text = $("entry-text").value.trim();
-    if (!text) { $("entry-text").focus(); return; }
-    var t = new Date();
-    change(function (j) {
-      j.entries.push({ id: uid(), date: todayKey(), time: t.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" }), type: $("entry-type").value, text: text });
-    });
-    $("entry-text").value = "";
-    $("entry-status").textContent = "Saved.";
-    renderEntries();
-  });
-
-  function renderAll() { renderMonth(); renderPages(); renderEntries(); }
-  I.subscribe(renderAll); // e.g. after signing in, the account's journal loads
+  function renderAll() { renderMonth(); renderPages(); }
+  I.subscribe(renderAll); // e.g. after signing in, the account's lists load
   renderAll();
 })();

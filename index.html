@@ -26,7 +26,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Iron. “Iron sharpens iron.” Proverbs 27:17. A sword against bright light.">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="style.css?v=202610171322">
+<link rel="stylesheet" href="style.css?v=202610171328">
 </head>
 <body>
 <svg class="filters" aria-hidden="true" focusable="false">
@@ -39,11 +39,11 @@
     <a class="brand" href="#today">Iron</a>
     <nav aria-label="Sections">
       <a href="#today">Today</a>
+      <a href="#month">Month</a>
       <a href="#progress">Progress</a>
       <a href="#goals">Goals</a>
       <a href="#group">Group</a>
-      <a href="resources.html?v=202610171322">Resources</a>
-      <a href="journal.html?v=202610171322">Journal</a>
+      <a href="resources.html?v=202610171328">Resources</a>
     </nav>
     <button type="button" class="nav-account" id="account-btn" hidden>Sign in</button>
   </div>
@@ -98,6 +98,18 @@
         <button type="submit" class="btn">Add</button>
       </div>
     </form>
+  </section>
+
+  <!-- THIS MONTH: a few things to get done, in four lists -->
+  <section id="month" class="section">
+    <p class="eyebrow">This month</p>
+    <div class="cal-head">
+      <button type="button" id="plan-prev" aria-label="Previous month">←</button>
+      <h2 id="plan-title">This month</h2>
+      <button type="button" id="plan-next" aria-label="Next month">→</button>
+    </div>
+    <p>Your daily goals are above. These are the few bigger things you want to get done this month. Tap a list’s name to rename it.</p>
+    <div class="jlists" id="actions"></div>
   </section>
 
   <!-- PROGRESS: stats, calendar, areas -->
@@ -161,10 +173,25 @@
     </div>
     <div class="btn-row">
       <button type="button" class="btn" id="copy-questions">Copy questions</button>
-      <a class="btn btn--light" href="resources.html?v=202610171322#repent">Repenter quadrant</a>
+      <a class="btn btn--light" href="resources.html?v=202610171328#repent">Repenter quadrant</a>
     </div>
     <p class="status" id="copy-status" role="status"></p>
     <textarea id="questions-text" class="visually-hidden" aria-hidden="true" tabindex="-1"></textarea>
+  </section>
+
+  <!-- PRAY: a private prayer list and things to be thankful for -->
+  <section id="pray" class="section">
+    <div class="frame frame--window" aria-label="In everything by prayer and supplication with thanksgiving let your requests be made known to God. Philippians 4:6">
+      <img class="frame-photo" src="cross-window.jpg" alt="" width="480" height="640" loading="lazy">
+      <p class="verse-big">“In everything by prayer and supplication with thanksgiving let your requests be made known to God.”</p>
+      <div class="frame-meta"><span>Philippians 4:6</span><span>Private · only you can see it</span></div>
+    </div>
+    <h2>Pray and give thanks</h2>
+    <p>Bring this list to group: it answers “Who are you praying for by name?” and answered prayers are worth celebrating together.</p>
+    <div class="jpages jpages--two">
+      <div class="jpage"><h3>Praying for</h3><div id="page-prayers"></div></div>
+      <div class="jpage"><h3>Thankful for</h3><div id="page-gratitude"></div></div>
+    </div>
   </section>
 
   <!-- YOUR GROUP: shown once accounts are set up (see ACCOUNTS.md) -->
@@ -214,14 +241,15 @@
 
 <footer class="site-footer">
   <p>Made for college connection groups. Readings from Cornerstone’s <a href="https://cornerstonelife.com/workout/" target="_blank" rel="noopener">Spiritual Workout Plan</a>.</p>
-  <p class="fine build">Iron · Version 202610171322</p>
+  <p class="fine build">Iron · Version 202610171328</p>
   <p class="fine">Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), © 2001 by Crossway, a publishing ministry of Good News Publishers. Used by permission. All rights reserved.</p>
 </footer>
 
-<script src="goals.js?v=202610171322"></script>
-<script src="plan.js?v=202610171322"></script>
-<script src="app.js?v=202610171322"></script>
-<script src="firebase-config.js?v=202610171322"></script>
-<script src="account.js?v=202610171322"></script>
+<script src="goals.js?v=202610171328"></script>
+<script src="plan.js?v=202610171328"></script>
+<script src="app.js?v=202610171328"></script>
+<script src="firebase-config.js?v=202610171328"></script>
+<script src="journal.js?v=202610171328"></script>
+<script src="account.js?v=202610171328"></script>
 </body>
 </html>

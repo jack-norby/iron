@@ -608,8 +608,9 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
 .acct-close { position: absolute; top: 8px; right: 10px; background: none; border: 0; font-size: 1.8rem; line-height: 1; color: var(--ink); cursor: pointer; padding: 4px 8px; }
 
 /* ---------- journal ---------- */
-.frame--journal { min-height: clamp(380px, 60vw, 500px); }
-.frame--journal .frame-photo { object-position: 50% 16%; }
+.frame--window { min-height: clamp(380px, 60vw, 500px); margin-bottom: 22px; }
+.frame--window .frame-photo { object-position: 50% 16%; }
+.frame--window .verse-big { max-width: 22ch; }
 #month .cal-head { margin-top: 4px; }
 #month .cal-head h2 { margin: 0; text-align: center; }
 .jlists { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; margin-top: 18px; }
@@ -637,20 +638,12 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
 .jadd input { flex: 1; min-width: 0; padding: 8px 10px; border: 1px solid var(--ink-2); border-radius: 0; background: var(--paper); color: var(--ink); font-size: 1rem; }
 .jadd .btn { padding: 8px 12px; }
 .jpages { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+.jpages--two { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .jpage .jitem { flex-wrap: wrap; }
 .jpage .jmeta { order: 3; flex-basis: 100%; padding-left: 30px; margin-top: -2px; }
 .jpage h3 { font-family: var(--cond); font-weight: 600; font-size: 1.4rem; letter-spacing: .03em; color: var(--powder); padding-bottom: 6px; border-bottom: 1px solid var(--ink-2); filter: url(#fuzz-sm); }
 @media (max-width: 760px) { .jpages { grid-template-columns: 1fr; } }
 @media (max-width: 600px) { .jlists { grid-template-columns: 1fr; } }
-.jentry-form { display: grid; gap: 10px; margin-top: 14px; }
-.jentry-form select { padding: 8px 10px; border: 1px solid var(--ink-2); border-radius: 0; background: var(--paper); color: var(--ink); font-family: var(--mono); font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; }
-.jentry-form textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--ink-2); border-radius: 0; background: var(--paper-2); color: var(--ink); font-family: var(--body); font-size: 1.12rem; line-height: 1.5; resize: vertical; }
-.jentry-form textarea::placeholder { color: var(--muted); font-style: italic; }
-.jentries { display: grid; gap: 10px; margin-top: 18px; }
-.jentry { background: var(--paper-2); border: 1px solid var(--rule); border-left: 3px solid var(--powder); padding: 14px 16px 10px; }
-.jentry-meta { font-family: var(--mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-.jentry-meta b { color: var(--powder); font-weight: 500; }
-.jentry-text { white-space: pre-wrap; overflow-wrap: anywhere; max-width: none; }
 
 /* ---------- settings & footer ---------- */
 #settings summary { cursor: pointer; font-family: var(--mono); font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; }

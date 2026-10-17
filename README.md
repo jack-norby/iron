@@ -10,7 +10,8 @@ A simple daily tracker for college connection groups. It covers four areas (Spir
 - **Connection group**: weekly accountability questions with a button that copies them for the group chat.
 - **Settings**: a backup code to move to another phone, and Start over.
 - **Rest built in**: a weekly Sabbath (Sunday unless you pick another day) that never breaks your streak, a rest side to every area and Rest-tagged goals. The idea comes from *The Power of Full Engagement* and from God resting on the seventh day.
-- **Journal** (`journal.html`): private monthly actions in four lists you can rename (Personal, School, Work, Spiritual), Remember / Gratitude / Prayers and dated entries. It syncs to your account if you're signed in. Leaders never see it.
+- **This month**: a few bigger things to get done, in four lists you can rename (Personal, School, Work, Spiritual), right under the daily checklist.
+- **Pray and give thanks**: a private prayer list (check off answered prayers) and a "thankful for" list, next to the group questions. Both sync to your account if you're signed in. Leaders never see them.
 - **Resources** (`resources.html`): the gospel in four words (relationship, gap, bridge, freedom), the bridge diagram ("Christ in our place," Romans 6:23) as a step-by-step walkthrough, a 60-second testimony builder, an "ask, listen, share, invite" guide, the Repenter quadrant with next steps.
 
 - **Reminders**: pick a Bible-reading time and a check-in time, then tap once to add daily alerts to your phone's calendar. They link back to the site.
