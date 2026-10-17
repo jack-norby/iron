@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lock In</title>
+<meta name="description" content="A simple daily tracker for physical, mental, emotional and spiritual goals, built for college connection groups.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="brand" href="#today">Lock In</a>
+  <nav aria-label="Sections">
+    <a href="#today">Today</a>
+    <a href="#progress">Progress</a>
+    <a href="#goals">Goals</a>
+    <a href="#group">Group</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- TODAY: the daily checklist -->
+  <section id="today" class="section">
+    <div class="day-head">
+      <div>
+        <p class="eyebrow" id="day-label">Today</p>
+        <h1 id="day-title">Today</h1>
+      </div>
+      <div class="day-nav">
+        <button type="button" id="prev-day" aria-label="Previous day">←</button>
+        <button type="button" id="go-today">Today</button>
+        <button type="button" id="next-day" aria-label="Next day">→</button>
+      </div>
+    </div>
+
+    <div class="welcome" id="welcome" hidden>
+      <p><b>Welcome.</b> We started you with a few goals in each area, Spiritual first. Check them off each day. Tap × to drop one, or add more under <a href="#goals">Goals</a>.</p>
+      <button type="button" class="btn" id="welcome-ok">Got it</button>
+    </div>
+
+    <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+    <p class="progress-text" id="progress-text">0 of 0 done</p>
+
+    <div id="checklist"></div>
+
+    <div class="reading" id="reading" hidden></div>
+
+    <form class="add-form" id="add-form">
+      <label for="new-goal">Add your own goal</label>
+      <div class="add-row">
+        <input id="new-goal" type="text" maxlength="80" placeholder="e.g. Gym before class">
+        <select id="new-area" aria-label="Area"></select>
+        <button type="submit" class="btn">Add</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- PROGRESS: stats, calendar, areas -->
+  <section id="progress" class="section">
+    <h2>Progress</h2>
+    <div class="stats">
+      <div><b id="stat-streak">0</b><span>Day streak</span></div>
+      <div><b id="stat-best">0</b><span>Best streak</span></div>
+      <div><b id="stat-week">0%</b><span>Last 7 days</span></div>
+      <div><b id="stat-checks">0</b><span>Check-offs</span></div>
+    </div>
+    <p class="hint">A day counts toward your streak when you finish at least 80% of your goals.</p>
+
+    <div class="cal-head">
+      <button type="button" id="prev-month" aria-label="Previous month">←</button>
+      <h3 id="month-title">Month</h3>
+      <button type="button" id="next-month" aria-label="Next month">→</button>
+    </div>
+    <div class="cal" id="calendar"></div>
+    <div class="legend" aria-hidden="true">
+      <span>Less</span><i data-lvl="0"></i><i data-lvl="1"></i><i data-lvl="2"></i><i data-lvl="3"></i><i data-lvl="4"></i><span>All done</span>
+    </div>
+
+    <h3>Last 30 days by area</h3>
+    <div class="areas-bars" id="area-bars"></div>
+  </section>
+
+  <!-- GOALS: the four areas, condensed -->
+  <section id="goals" class="section">
+    <h2>Goals</h2>
+    <p>Four areas, one life. Pick a few goals in each and add them to your daily list. Start small: it’s better to keep three goals than to drop ten.</p>
+    <div id="areas"></div>
+  </section>
+
+  <!-- GROUP: weekly accountability -->
+  <section id="group" class="section">
+    <h2>Connection group</h2>
+    <p>Go through these together once a week. First round, give a quick one- or two-sentence answer to each. Then go back to whatever needs more time.</p>
+    <ol class="questions" id="questions"></ol>
+    <button type="button" class="btn" id="copy-questions">Copy questions</button>
+    <p class="status" id="copy-status" role="status"></p>
+    <textarea id="questions-text" class="visually-hidden" aria-hidden="true" tabindex="-1"></textarea>
+  </section>
+
+  <!-- SETTINGS -->
+  <section id="settings" class="section">
+    <details>
+      <summary>Settings &amp; backup</summary>
+      <p>Your goals and check-ins are saved on this device only. To move them to another phone, copy your backup code and paste it there.</p>
+      <textarea id="backup-code" rows="3" placeholder="Backup code"></textarea>
+      <div class="btn-row">
+        <button type="button" class="btn" id="backup-copy">Copy my code</button>
+        <button type="button" class="btn btn--ghost" id="backup-restore">Restore</button>
+      </div>
+      <p class="status" id="backup-status" role="status"></p>
+      <button type="button" class="link-btn" id="reset">Start over</button>
+    </details>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Made for college connection groups. Readings from Cornerstone’s <a href="https://cornerstonelife.com/workout/" target="_blank" rel="noopener">Spiritual Workout Plan</a>.</p>
+  <p class="fine">Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), © 2001 by Crossway, a publishing ministry of Good News Publishers. Used by permission. All rights reserved.</p>
+</footer>
+
+<script src="goals.js"></script>
+<script src="plan.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
