@@ -1,4 +1,6 @@
-# Lock In
+# Iron
+
+> “Iron sharpens iron, and one man sharpens another.” Proverbs 27:17
 
 A simple daily tracker for college connection groups. It covers four areas (Spiritual first, then Physical, Mental and Emotional) on one page.
 
@@ -9,15 +11,19 @@ A simple daily tracker for college connection groups. It covers four areas (Spir
 - **Settings**: a backup code to move to another phone, and Start over.
 - **Resources** (`resources.html`): the gospel in four words, the bridge diagram ("Christ in our place," Romans 6:23) as a step-by-step walkthrough, a 60-second testimony builder, an "ask, listen, share, invite" guide, the Repenter quadrant with next steps, and books and podcasts to go deeper.
 
-Everything saves in the browser on each person's device. There's no sign-in yet.
+- **Reminders**: pick a Bible-reading time and a check-in time, then tap once to add daily alerts to your phone's calendar. They link back to the site.
+- **Your group** (needs accounts): sign in with Google or email so your tracker follows you to any device. Leaders start a group and share a 6-character code, and can make a co-leader. Leaders see each person's streak, today's progress, last 7 days, area bars and last check-in, never their goals. See [ACCOUNTS.md](ACCOUNTS.md) for the 10-minute Firebase setup.
+
+Without accounts, everything saves in the browser on each person's device.
 
 ## Files
 | File | What it is |
 | --- | --- |
 | `index.html` | The main page |
 | `resources.html`, `resources.js` | The resources page and its interactive parts |
-| `app.js` | All the logic (checklist, calendar, stats, backup) |
-| `goals.js` | The four areas, their suggested goals and the group questions. Edit this to change content. |
+| `app.js` | The tracker logic (checklist, calendar, stats, reminders, backup) |
+| `account.js`, `firebase-config.js` | Sign-in, syncing and groups (off until `firebase-config.js` has your Firebase settings) |
+| `goals.js` | The four areas, their suggested goals and the group questions (Spiritual Workout Plan + Iron). Edit this to change content. |
 | `plan.js` | The Spiritual Workout Plan readings (Fall 2026). Replace the weeks each semester. |
 | `style.css` | All the styling. Colors and fonts are tokens at the top. |
 | `*.jpg` | The photos (cross in the trees, crucifix, horse, dove, raised hands) |

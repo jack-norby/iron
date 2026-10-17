@@ -60,13 +60,21 @@ window.AREAS = [
   }
 ];
 
-// Weekly questions for connection group.
-window.GROUP_QUESTIONS = [
-  { q: "Spiritual", a: "How was your time with God this week? Did you do the reading and learn the verse?" },
-  { q: "Into the light", a: "What sin or temptation do you need to bring into the light?" },
+// Weekly accountability questions, word for word from the Spiritual Workout Plan.
+window.SWP_QUESTIONS = [
+  { q: "Spiritual Disciplines", a: "Did you complete your Spiritual Workout Plan reading and memory this week?" },
+  { q: "Sin & Temptation", a: "What sin or temptation do you need to bring into the light?" },
+  { q: "Celebration & Stress", a: "What joy can you celebrate? What stress or burden do you need help carrying?" },
+  { q: "Relationship Health", a: "Is there any brokenness in your core relationships that needs to be healed?" },
+  { q: "Goals", a: "What sin do you want to kill or area of godliness do you want to grow in?" },
+  { q: "Integrity Check", a: "Have you been completely honest?" }
+];
+
+// Extra questions for the other parts of Iron.
+window.EXTRA_QUESTIONS = [
+  { q: "Physical", a: "How did sleep, exercise and eating go this week?" },
+  { q: "Mental", a: "Where did your time and attention go? Is anything running you?" },
+  { q: "Emotional", a: "Who did you spend real time with? What’s weighing on you?" },
   { q: "Repenter check", a: "Did you confess fast and full this week, or did you hide it, try to fix it alone or just talk about it?" },
-  { q: "Physical", a: "How did sleep, exercise and eating go?" },
-  { q: "Mental", a: "Where did your time and attention go? Anything running you?" },
-  { q: "Emotional", a: "What was good this week? What’s weighing on you?" },
-  { q: "Integrity", a: "Have you been completely honest?" }
+  { q: "Sharing", a: "Who are you praying for by name? Did you get to share your story or the gospel with anyone?" }
 ];

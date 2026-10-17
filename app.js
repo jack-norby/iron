@@ -1,12 +1,13 @@
-/* Lock In: daily goals for the four areas, a calendar, stats, the reading plan
+/* Iron: daily goals for the four areas, a calendar, stats, the reading plan
    and weekly group questions. Everything saves in this browser (localStorage). */
 (function () {
   "use strict";
 
   var AREAS = window.AREAS;
   var PLAN = window.READING_PLAN;
-  var QUESTIONS = window.GROUP_QUESTIONS;
-  var STORE = "lockin-v1";
+  var SWP_QUESTIONS = window.SWP_QUESTIONS;
+  var EXTRA_QUESTIONS = window.EXTRA_QUESTIONS;
+  var STORE = "iron-v1";
 
   // ---------- dates (all local time, keyed YYYY-MM-DD) ----------
   function pad(n) { return (n < 10 ? "0" : "") + n; }
@@ -28,14 +29,18 @@
   function valid(s) { return s && Array.isArray(s.goals) && s.log && typeof s.log === "object"; }
   function load() {
     try {
-      var s = JSON.parse(localStorage.getItem(STORE));
+      var s = JSON.parse(localStorage.getItem(STORE) || localStorage.getItem("lockin-v1")); // lockin-v1: the site's earlier name
       if (valid(s)) { if (!s.created) s.created = TODAY; return s; }
     } catch (e) { /* storage blocked or empty */ }
     return fresh();
   }
   var state = load();
-  function save() {
+  function saveLocal() {
     try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) { /* not saved */ }
+  }
+  function save() {
+    saveLocal();
+    if (window.Iron.onSave) window.Iron.onSave(state);
   }
 
   function hasGoal(id) { return state.goals.some(function (g) { return g.id === id; }); }
@@ -194,22 +199,44 @@
   }
 
   // ---------- progress ----------
-  function renderProgress() {
+  // The numbers shown here are also what group leaders see (never the goals themselves).
+  function summary() {
     // streak: today counts once it's locked in; until then the streak runs through yesterday
     var streak = 0;
     for (var k = lockedIn(TODAY) ? TODAY : addDays(TODAY, -1); lockedIn(k); k = addDays(k, -1)) streak++;
-    var best = 0, run = 0, checks = 0;
+    var best = 0, run = 0, checks = 0, last = "";
     for (var d = firstDay(); d <= TODAY; d = addDays(d, 1)) {
       if (lockedIn(d)) { run++; best = Math.max(best, run); } else run = 0;
-      checks += doneOn(d).length;
+      var n = doneOn(d).length;
+      checks += n;
+      if (n) last = d;
     }
-    var week = 0;
-    for (var w = 0; w < 7; w++) week += fraction(addDays(TODAY, -w));
-    $("stat-streak").textContent = streak;
-    $("hero-streak").textContent = streak;
-    $("stat-best").textContent = best;
-    $("stat-week").textContent = Math.round((week / 7) * 100) + "%";
-    $("stat-checks").textContent = checks;
+    // last 7 days, or fewer for someone who started less than a week ago
+    var span = 0, week = 0;
+    for (var w = 0; w < 7 && addDays(TODAY, -w) >= firstDay(); w++) { week += fraction(addDays(TODAY, -w)); span++; }
+    span = Math.max(span, 1);
+    var areas = {};
+    AREAS.forEach(function (a) {
+      var ids = state.goals.filter(function (g) { return g.area === a.id; }).map(function (g) { return g.id; });
+      var hits = 0;
+      for (var i = 0; i < span; i++) hits += doneOn(addDays(TODAY, -i)).filter(function (x) { return ids.indexOf(x) !== -1; }).length;
+      areas[a.id] = ids.length ? Math.round((hits / (ids.length * span)) * 100) : null;
+    });
+    return {
+      streak: streak, best: best, checks: checks,
+      week: Math.round((week / span) * 100),
+      today: doneOn(TODAY).length, total: state.goals.length,
+      lastCheckin: last, areas: areas, date: TODAY
+    };
+  }
+
+  function renderProgress() {
+    var s = summary();
+    $("stat-streak").textContent = s.streak;
+    $("hero-streak").textContent = s.streak;
+    $("stat-best").textContent = s.best;
+    $("stat-week").textContent = s.week + "%";
+    $("stat-checks").textContent = s.checks;
     renderCalendar();
     renderAreaBars();
   }
@@ -317,17 +344,60 @@
     });
   }
 
-  // ---------- group questions ----------
+  // ---------- group questions: Spiritual Workout Plan on one side, the rest on the other ----------
   function renderQuestions() {
-    var ol = $("questions");
-    QUESTIONS.forEach(function (x) {
-      var li = document.createElement("li");
-      li.innerHTML = "<b></b> <span></span>";
-      li.querySelector("b").textContent = x.q;
-      li.querySelector("span").textContent = x.a;
-      ol.appendChild(li);
+    [["questions-swp", SWP_QUESTIONS], ["questions-extra", EXTRA_QUESTIONS]].forEach(function (pair) {
+      var ol = $(pair[0]);
+      pair[1].forEach(function (x) {
+        var li = document.createElement("li");
+        li.innerHTML = "<b></b> <span></span>";
+        li.querySelector("b").textContent = x.q;
+        li.querySelector("span").textContent = x.a;
+        ol.appendChild(li);
+      });
     });
-    $("questions-text").value = "Connection group check-in\n" + QUESTIONS.map(function (x, i) { return (i + 1) + ". " + x.q + ": " + x.a; }).join("\n");
+    var lines = function (list) { return list.map(function (x, i) { return (i + 1) + ". " + x.q + ": " + x.a; }).join("\n"); };
+    $("questions-text").value = "Connection group check-in\n\nSpiritual Workout Plan\n" + lines(SWP_QUESTIONS) + "\n\nIron\n" + lines(EXTRA_QUESTIONS);
+  }
+
+  // ---------- reminders: a calendar file with daily alerts ----------
+  function icsTime(hhmm) {
+    var p = hhmm.split(":");
+    var start = parseKey(addDays(TODAY, 1));
+    return keyOf(start).replace(/-/g, "") + "T" + pad(+p[0]) + pad(+p[1]) + "00";
+  }
+  function icsEvent(id, title, desc, time, rule) {
+    var url = location.href.split("#")[0];
+    var stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
+    return [
+      "BEGIN:VEVENT",
+      "UID:iron-" + id + "-" + Date.now() + "@iron",
+      "DTSTAMP:" + stamp,
+      "DTSTART:" + icsTime(time),
+      "DURATION:PT10M",
+      "RRULE:" + rule,
+      "SUMMARY:" + title,
+      "DESCRIPTION:" + desc + " " + url,
+      "URL:" + url,
+      "BEGIN:VALARM",
+      "ACTION:DISPLAY",
+      "DESCRIPTION:" + title,
+      "TRIGGER:PT0M",
+      "END:VALARM",
+      "END:VEVENT"
+    ];
+  }
+  function buildReminders() {
+    var lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Iron//Reminders//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", "X-WR-CALNAME:Iron"];
+    if ($("rem-read-on").checked) {
+      lines = lines.concat(icsEvent("read", "Read your Bible", "Today’s Spiritual Workout Plan reading is in Iron.", $("rem-read").value,
+        $("rem-weekdays").checked ? "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR" : "FREQ=DAILY"));
+    }
+    if ($("rem-check-on").checked) {
+      lines = lines.concat(icsEvent("checkin", "Check in on Iron", "How did today go? Check off your goals.", $("rem-check").value, "FREQ=DAILY"));
+    }
+    lines.push("END:VCALENDAR");
+    return lines.join("\r\n") + "\r\n";
   }
   function copyText(text, fallbackEl, status, okMsg) {
     var fallback = function () {
@@ -370,6 +440,21 @@
     renderProgress();
   });
 
+  $("rem-add").addEventListener("click", function () {
+    if (!$("rem-read-on").checked && !$("rem-check-on").checked) {
+      $("rem-status").textContent = "Turn on at least one reminder first.";
+      return;
+    }
+    var blob = new Blob([buildReminders()], { type: "text/calendar;charset=utf-8" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "iron-reminders.ics";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    $("rem-status").textContent = "Open the file and tap “Add” to put the reminders on your calendar.";
+  });
+
   $("copy-questions").addEventListener("click", function () {
     copyText($("questions-text").value, $("questions-text"), $("copy-status"), "Copied. Paste it in your group chat.");
   });
@@ -378,7 +463,7 @@
     var code = btoa(unescape(encodeURIComponent(JSON.stringify(state))));
     var box = $("backup-code");
     box.value = code;
-    copyText(code, box, $("backup-status"), "Copied. Paste it into Lock In on your other phone and tap Restore.");
+    copyText(code, box, $("backup-status"), "Copied. Paste it into Iron on your other phone and tap Restore.");
   });
   $("backup-restore").addEventListener("click", function () {
     try {
@@ -412,7 +497,24 @@
     renderAll();
   });
 
+  // Hooks for account.js (sign-in, syncing and groups).
+  window.Iron = {
+    getState: function () { return state; },
+    fresh: fresh,
+    valid: valid,
+    summary: summary,
+    setState: function (next) {
+      state = valid(next) ? next : fresh();
+      if (!state.created) state.created = TODAY;
+      saveLocal();
+      selected = TODAY;
+      syncMonth();
+      renderAll();
+    },
+    onSave: null
+  };
+
   renderQuestions();
   renderAll();
-  if (!state.welcomed) save(); // remember the start date for newcomers
+  if (!state.welcomed) saveLocal(); // remember the start date for newcomers
 })();

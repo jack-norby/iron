@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Lock In</title>
-<meta name="theme-color" content="#ebe5d8">
+<title>Iron</title>
+<meta name="theme-color" content="#0f0d0c">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Gloock&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<meta name="description" content="A simple daily tracker for physical, mental, emotional and spiritual goals, built for college connection groups.">
+<meta name="description" content="Iron: a daily tracker for spiritual, physical, mental and emotional goals, built for college connection groups. Iron sharpens iron.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,7 +19,7 @@
 
 <header class="site-header">
   <div class="inner">
-    <a class="brand" href="#today">Lock In</a>
+    <a class="brand" href="#today">Iron</a>
     <nav aria-label="Sections">
       <a href="#today">Today</a>
       <a href="#progress">Progress</a>
@@ -27,6 +27,7 @@
       <a href="#group">Group</a>
       <a href="resources.html">Resources</a>
     </nav>
+    <button type="button" class="nav-account" id="account-btn" hidden>Sign in</button>
   </div>
 </header>
 
@@ -109,8 +110,18 @@
   <!-- GROUP: weekly accountability -->
   <section id="group" class="section">
     <h2>Connection group</h2>
+    <blockquote class="verse verse--light"><p>“Iron sharpens iron, and one man sharpens another.”</p><cite>Proverbs 27:17</cite></blockquote>
     <p>Go through these together once a week. First round, give a quick one- or two-sentence answer to each. Then go back to whatever needs more time.</p>
-    <ol class="questions" id="questions"></ol>
+    <div class="q-cols">
+      <div>
+        <h3 class="q-col-title">Spiritual Workout Plan</h3>
+        <ol class="questions" id="questions-swp"></ol>
+      </div>
+      <div>
+        <h3 class="q-col-title">Iron</h3>
+        <ol class="questions" id="questions-extra"></ol>
+      </div>
+    </div>
     <div class="btn-row">
       <button type="button" class="btn" id="copy-questions">Copy questions</button>
       <a class="btn btn--light" href="resources.html#repent">Repenter quadrant</a>
@@ -119,11 +130,39 @@
     <textarea id="questions-text" class="visually-hidden" aria-hidden="true" tabindex="-1"></textarea>
   </section>
 
+  <!-- YOUR GROUP: shown once accounts are set up (see ACCOUNTS.md) -->
+  <section id="crew" class="section" hidden>
+    <p class="eyebrow">Your group</p>
+    <h2>Sharpen each other</h2>
+    <div id="crew-body"></div>
+  </section>
+
+  <!-- REMINDERS -->
+  <section id="reminders" class="section">
+    <h2>Reminders</h2>
+    <p>Pick your times and add them to your phone’s calendar. You’ll get an alert every day with a link back here.</p>
+    <div class="rem-grid">
+      <div class="rem">
+        <label class="rem-toggle"><input type="checkbox" id="rem-read-on" checked> Read my Bible</label>
+        <input type="time" id="rem-read" value="07:30" aria-label="Bible reading reminder time">
+        <label class="rem-sub"><input type="checkbox" id="rem-weekdays" checked> Weekdays only (the plan is Mon–Fri)</label>
+      </div>
+      <div class="rem">
+        <label class="rem-toggle"><input type="checkbox" id="rem-check-on" checked> Check in for the day</label>
+        <input type="time" id="rem-check" value="21:30" aria-label="Check-in reminder time">
+        <span class="rem-sub">Every day</span>
+      </div>
+    </div>
+    <div class="btn-row"><button type="button" class="btn" id="rem-add">Add reminders to my calendar</button></div>
+    <p class="status" id="rem-status" role="status"></p>
+    <p class="hint">Want texts for the reading plan? Cornerstone sends them: text WORKOUT to (515) 329-3343.</p>
+  </section>
+
   <!-- SETTINGS -->
   <section id="settings" class="section">
     <details>
       <summary>Settings &amp; backup</summary>
-      <p>Your goals and check-ins are saved on this device only. To move them to another phone, copy your backup code and paste it there.</p>
+      <p id="sync-note">Your goals and check-ins are saved on this device only. To move them to another phone, copy your backup code and paste it there.</p>
       <textarea id="backup-code" rows="3" placeholder="Backup code"></textarea>
       <div class="btn-row">
         <button type="button" class="btn" id="backup-copy">Copy my code</button>
@@ -144,5 +183,7 @@
 <script src="goals.js"></script>
 <script src="plan.js"></script>
 <script src="app.js"></script>
+<script src="firebase-config.js"></script>
+<script src="account.js"></script>
 </body>
 </html>

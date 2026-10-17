@@ -1,4 +1,4 @@
-/* Lock In resources: the bridge walkthrough, the 60-second story builder
+/* Iron resources: the bridge walkthrough, the 60-second story builder
    and the Repenter quadrant. */
 (function () {
   "use strict";
@@ -34,10 +34,10 @@
   showStep(0);
 
   // ---------- your story: saved on this device ----------
-  var STORY = "lockin-story";
+  var STORY = "iron-story";
   var fields = ["story-before", "story-met", "story-since"];
   var saved = {};
-  try { saved = JSON.parse(localStorage.getItem(STORY)) || {}; } catch (e) { /* no storage */ }
+  try { saved = JSON.parse(localStorage.getItem(STORY) || localStorage.getItem("lockin-story")) || {}; } catch (e) { /* no storage */ }
   function count() {
     var words = fields.reduce(function (n, id) {
       var t = $(id).value.trim();
