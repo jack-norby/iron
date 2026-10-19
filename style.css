@@ -16,9 +16,11 @@
   --clay: #816151;
   --stone: #bfb8ab;
   /* ground & type ("paper" is the background, "ink" is the text) */
-  --paper: var(--midnight);
-  --paper-2: #2d3540;
-  --paper-3: #38414d;
+  --oxblood: #411f1f;
+  --paper: var(--oxblood);
+  /* cards are see-through, so the paper texture shows on every surface and any background works */
+  --paper-2: rgba(214, 204, 168, 0.06);
+  --paper-3: rgba(214, 204, 168, 0.11);
   --print: #e4dcc3;
   --ink: var(--cream);
   --ink-2: var(--stone);
@@ -32,7 +34,7 @@
   --amber-ink: var(--cream);
   --gold: #c9b48f;
   /* the four areas */
-  --spiritual: #a3443d;
+  --spiritual: #d08a7c;
   --physical: #7b8450;
   --mental: var(--champagne);
   --emotional: #b0674a;
@@ -73,7 +75,11 @@ body {
   flex-direction: column;
   overflow: hidden;
   margin: 0;
-  background: var(--paper);
+  /* aged paper: mottling and fibers (paper.png) and two faint fold lines, over the base color */
+  background:
+    linear-gradient(90deg, transparent 0 6.4%, rgba(0, 0, 0, .1) 6.5%, rgba(255, 250, 235, .05) 6.65%, transparent 6.8% 93.4%, rgba(0, 0, 0, .08) 93.5%, rgba(255, 250, 235, .04) 93.65%, transparent 93.8%),
+    url("paper.png?v=202610192115") 0 0 / 512px repeat,
+    var(--paper);
   color: var(--ink);
   font-family: var(--body);
   font-size: 1.08rem;
@@ -87,7 +93,7 @@ body::after {
   inset: 0;
   pointer-events: none;
   background-image: var(--grain-light);
-  opacity: 0.05;
+  opacity: 0.03;
   z-index: 100;
 }
 a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
@@ -118,7 +124,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   position: relative;
   padding-top: env(safe-area-inset-top, 0px);
   z-index: 10;
-  background: var(--paper);
+  background: transparent;
   border-bottom: 1px solid var(--rule);
 }
 .scroller {
@@ -208,7 +214,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
 }
 .frame > *:not(.frame-photo) { position: relative; z-index: 3; }
 .frame .verse-big { font-family: var(--display); font-style: italic; font-weight: 400; color: var(--powder); font-size: clamp(1.55rem, 4.8vw, 2.15rem); line-height: 1.22; letter-spacing: 0; max-width: 24ch; margin: 0 0 12px; text-shadow: 0 1px 12px rgba(0, 0, 0, .35); }
-.frame--sword .verse-big { font-family: var(--script); font-style: normal; font-size: clamp(3.1rem, 10vw, 4.6rem); line-height: 1; max-width: none; }
+.frame--sword .verse-big { font-family: var(--script); font-style: normal; font-size: clamp(2.5rem, 8.6vw, 4.6rem); line-height: 1; max-width: none; white-space: nowrap; }
 .frame .frame-meta { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-family: var(--mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 246, 226, .7); }
 .frame .frame-meta b { color: var(--powder); font-weight: 500; }
 
@@ -425,10 +431,10 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
   box-shadow: 0 6px 12px -6px rgba(0, 0, 0, .7);
 }
 .plate::after { content: ""; position: absolute; inset: 0; background-image: var(--grain-light); opacity: .12; }
-.plate-spiritual { background: #ddd url("cross-mountain.jpg?v=202610191739") 42% 30% / cover; }
-.plate-physical { background: #ddd url("runner.jpg?v=202610191739") 50% 45% / cover; }
-.plate-mental { background: var(--olive) url("fishing.jpg?v=202610191739") 25% 62% / cover; }
-.plate-emotional { background: var(--umber) url("worship.jpg?v=202610191739") 58% 66% / cover; }
+.plate-spiritual { background: #ddd url("cross-mountain.jpg?v=202610192115") 42% 30% / cover; }
+.plate-physical { background: #ddd url("runner.jpg?v=202610192115") 50% 45% / cover; }
+.plate-mental { background: var(--olive) url("fishing.jpg?v=202610192115") 25% 62% / cover; }
+.plate-emotional { background: var(--umber) url("worship.jpg?v=202610192115") 58% 66% / cover; }
 
 /* ---------- group: a darkroom panel ---------- */
 #group {
@@ -436,7 +442,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
   overflow: hidden;
   background:
     linear-gradient(180deg, rgba(49, 39, 30, .62) 0%, rgba(49, 39, 30, .9) 38%, rgba(49, 39, 30, .97) 100%),
-    var(--umber) url("canoe.jpg?v=202610191739") 50% 45% / cover;
+    var(--umber) url("canoe.jpg?v=202610192115") 50% 45% / cover;
   color: var(--glow);
   margin-left: calc(-1 * var(--gutter-l));
   margin-right: calc(-1 * var(--gutter-r));
@@ -456,7 +462,6 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
 #group .btn { background: var(--powder); color: var(--choc); border-color: var(--powder); }
 .frame--sword { min-height: clamp(380px, 62vw, 540px); margin-bottom: 22px; justify-items: end; text-align: right; }
 .frame--sword .frame-photo { object-position: 20% 60%; }
-.frame--sword .verse-big { max-width: 15ch; }
 .frame--sword .frame-meta { width: 100%; }
 @media (max-width: 520px) { .frame--sword .frame-meta { justify-content: flex-end; } }
 #group .btn--light { background: transparent; color: var(--powder); border-color: var(--powder); text-decoration: none; }
@@ -553,14 +558,14 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
 .axis-bottom::after { content: " ↓"; }
 .axis-left { grid-area: left; writing-mode: vertical-rl; transform: rotate(180deg); }
 .axis-right { grid-area: right; writing-mode: vertical-rl; }
-.quad { grid-area: quad; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); border: 1px solid var(--ink-2); }
-.quad button { background: var(--paper-2); border: 0; padding: 18px 14px; min-height: 120px; text-align: left; cursor: pointer; display: grid; align-content: start; gap: 4px; color: var(--ink); }
+.quad { grid-area: quad; display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--ink-2); }
+.quad button { background: var(--paper-2); border: 0; box-shadow: inset 0 0 0 .5px var(--rule); padding: 18px 14px; min-height: 120px; text-align: left; cursor: pointer; display: grid; align-content: start; gap: 4px; color: var(--ink); }
 .quad button:hover { background: var(--paper-3); }
 .quad button b { font-family: var(--display); font-weight: 400; font-size: 1.8rem; line-height: 1; }
 .quad button span { font-size: .98rem; font-style: italic; color: var(--ink-2); }
 .quad button[aria-pressed="true"] { background: var(--powder); color: var(--paper); }
 .quad button[aria-pressed="true"] span { color: rgba(37, 44, 54, .8); }
-.quad-detail { background: var(--burgundy); color: var(--glow); padding: 20px 22px 14px; margin-bottom: 8px; border: 1px solid rgba(214, 204, 168, .3); }
+.quad-detail { background: var(--midnight); color: var(--glow); padding: 20px 22px 14px; margin-bottom: 8px; border: 1px solid rgba(214, 204, 168, .3); }
 .quad-detail .eyebrow { color: var(--powder); }
 .quad-detail .q-name { font-family: var(--cond); font-weight: 600; font-size: 2.4rem; letter-spacing: .02em; text-transform: uppercase; color: var(--powder); margin-bottom: 8px; }
 .q-what { font-size: 1.12rem; }
@@ -634,7 +639,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
 .site-header .inner { align-items: center; }
 .nav-account { font-family: var(--mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; background: transparent; color: var(--ink); border: 1px solid var(--ink-2); border-radius: 0; padding: 7px 12px; cursor: pointer; }
 .nav-account.signed-in { border-color: var(--powder); color: var(--powder); }
-.account-dialog { border: 1px solid var(--rule); padding: 28px 22px 22px; width: min(420px, calc(100vw - 32px)); max-height: calc(100vh - 32px); overflow: auto; background: var(--paper-2); color: var(--ink); display: none; }
+.account-dialog { border: 1px solid var(--rule); padding: 28px 22px 22px; width: min(420px, calc(100vw - 32px)); max-height: calc(100vh - 32px); overflow: auto; background: url("paper.png?v=202610192115") 0 0 / 512px repeat, var(--paper); color: var(--ink); display: none; }
 .account-dialog[open] { display: grid; gap: 12px; }
 .account-dialog::backdrop { background: rgba(12, 12, 0, .7); }
 .account-dialog .acct-out, .account-dialog .acct-in { display: grid; gap: 12px; }
