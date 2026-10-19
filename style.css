@@ -1,6 +1,6 @@
-/* Iron — old faith-based Americana: cream paper, umber ink, burgundy, and dark panels in the
-   owner's palette (midnight blue, moss green, umber), Palatino headlines, a soft lowercase
-   wordmark and an old ink script for verses on photos. One look, by design. */
+/* Iron — old faith-based Americana on midnight blue: cream text, the owner's palette (midnight,
+   moss, umber, burgundy, champagne, onyx) plus olive, rust, clay and stone, old snapshots with
+   cream borders, Palatino everywhere and a pen script in two places. One look, by design. */
 :root {
   /* the owner's palette */
   --midnight: #252c36;
@@ -10,48 +10,52 @@
   --champagne: #b39f84;
   --onyx: #0c0c00;
   --cream: #d6cca8;
+  /* from the second palette */
+  --olive: #454829;
+  --rust: #7a3418;
+  --clay: #816151;
+  --stone: #bfb8ab;
   /* ground & type ("paper" is the background, "ink" is the text) */
-  --paper: #ece6d7;
-  --paper-2: #e2dac8;
-  --paper-3: #d5cab3;
-  --print: #f7f4ec;
-  --ink: var(--umber);
-  --ink-2: #534538;
-  --muted: #7a6b5b;
-  --rule: rgba(49, 39, 30, 0.17);
-  /* dark panels and the accent. --powder is the accent's old name: burgundy on paper;
-     dark panels switch it to cream (see below). */
+  --paper: var(--midnight);
+  --paper-2: #2d3540;
+  --paper-3: #38414d;
+  --print: #e4dcc3;
+  --ink: var(--cream);
+  --ink-2: var(--stone);
+  --muted: #9a9384;
+  --rule: rgba(214, 204, 168, 0.17);
+  /* panels and the accent (--powder is the accent's old name) */
   --choc: var(--umber);
-  --glow: #ece4cc;
-  --powder: var(--burgundy);
-  --amber: var(--burgundy);
-  --amber-ink: #4a1716;
-  --gold: var(--cream);
+  --glow: var(--cream);
+  --powder: #c9b48f;
+  --amber: #c9b48f;
+  --amber-ink: var(--cream);
+  --gold: #c9b48f;
   /* the four areas */
-  --spiritual: var(--burgundy);
-  --physical: #3e5233;
-  --mental: #2f3b4f;
-  --emotional: #816151;
+  --spiritual: #a3443d;
+  --physical: #7b8450;
+  --mental: var(--champagne);
+  --emotional: #b0674a;
   /* calendar */
-  --lvl-1: rgba(49, 39, 30, 0.1);
-  --lvl-2: rgba(49, 39, 30, 0.26);
-  --lvl-3: rgba(49, 39, 30, 0.58);
-  --lvl-4: var(--umber);
+  --lvl-1: rgba(214, 204, 168, 0.12);
+  --lvl-2: rgba(214, 204, 168, 0.3);
+  --lvl-3: rgba(214, 204, 168, 0.6);
+  --lvl-4: var(--cream);
 
-  /* Palatino is the main typeface (built into iPhones, Macs and Windows; P052/URW Palladio are free
-     clones on Linux; EB Garamond is the web fallback). The script is used in only two places. */
-  --display: "Palatino", "Palatino Linotype", "Book Antiqua", "P052", "URW Palladio L", "EB Garamond", Georgia, serif;
+  /* Palatino is the typeface for everything (built into iPhones, Macs and Windows; P052/URW Palladio
+     are free clones on Linux). The pen script is used in only two places. */
+  --display: "Palatino", "Palatino Linotype", "Book Antiqua", "P052", "URW Palladio L", Georgia, serif;
   --cond: var(--display);
   --script: "Mrs Saint Delafield", var(--display);
   --body: var(--display);
-  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --mono: var(--display);
 
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   --grain-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 -.05'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   --wrap: 760px;
   --gutter-l: max(18px, env(safe-area-inset-left, 0px));
   --gutter-r: max(18px, env(safe-area-inset-right, 0px));
-  color-scheme: light;
+  color-scheme: dark;
 }
 /* dark panels: the accent turns saddle gold so it reads on espresso */
 .frame, #group, .say-it, .quad-detail { --powder: var(--gold); --amber: var(--gold); }
@@ -82,8 +86,8 @@ body::after {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background-image: var(--grain);
-  opacity: 0.07;
+  background-image: var(--grain-light);
+  opacity: 0.05;
   z-index: 100;
 }
 a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
@@ -172,7 +176,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
   align-content: end;
   padding: 26px 24px 22px;
   border: 10px solid var(--print);
-  box-shadow: 0 1px 0 rgba(43, 33, 25, .08), 0 14px 28px -18px rgba(43, 33, 25, .55);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .2), 0 16px 30px -16px rgba(0, 0, 0, .7);
 }
 .frame-photo {
   position: absolute;
@@ -214,9 +218,9 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
   align-items: center;
   justify-content: center;
   gap: 6px;
-  background: var(--ink);
-  color: var(--paper);
-  border: 1px solid var(--ink);
+  background: var(--burgundy);
+  color: var(--cream);
+  border: 1px solid #7d2c2a;
   border-radius: 0;
   padding: 10px 18px;
   font-family: var(--mono);
@@ -225,7 +229,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
   text-transform: uppercase;
   cursor: pointer;
 }
-.btn:hover { background: var(--ink-2); }
+.btn:hover { background: #7d2c2a; }
 .btn--ghost { background: transparent; color: var(--ink); }
 .btn--ghost:hover { background: var(--paper-2); }
 .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
@@ -253,7 +257,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
 .welcome { background: var(--paper-2); padding: 16px 18px; margin-bottom: 18px; border-left: 3px solid var(--amber); }
 .welcome p { font-size: 1.05rem; }
 /* the Sabbath: shown on your rest day */
-.sabbath { background: rgba(102, 34, 33, .05); border: 1px solid var(--rule); border-left: 3px solid var(--powder); padding: 16px 18px 6px; margin-bottom: 18px; }
+.sabbath { background: var(--moss); border: 1px solid rgba(214, 204, 168, .14); border-left: 3px solid var(--physical); padding: 16px 18px 6px; margin-bottom: 18px; }
 .sabbath .eyebrow { color: var(--powder); margin-bottom: 2px; }
 .sabbath-big { font-family: var(--script); font-size: clamp(3.3rem, 12vw, 4.6rem); line-height: 1.1; margin: 14px 0 10px; color: var(--powder); }
 .sabbath-photo { display: block; width: calc(100% + 36px); max-width: none; height: 150px; object-fit: cover; object-position: 50% 60%; margin: -16px -18px 14px; }
@@ -391,7 +395,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
 .site-list i { font-style: normal; font-family: var(--mono); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; color: var(--powder); margin-top: 4px; overflow-wrap: anywhere; }
 .area-app b { font-family: var(--cond); font-weight: 400; font-size: 1rem; letter-spacing: .08em; text-transform: uppercase; }
 .area-app span { grid-column: 1; font-size: .98rem; color: var(--muted); font-style: italic; }
-.area-app i { grid-column: 2; grid-row: 1 / span 2; font-style: normal; font-family: var(--mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--area, var(--ink)); white-space: nowrap; }
+.area-app i { grid-column: 2; grid-row: 1 / span 2; font-style: normal; font-family: var(--mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--powder); white-space: nowrap; }
 @media (max-width: 560px) { .area-app { grid-template-columns: 1fr; margin-bottom: 10px; } .area-app i { grid-column: 1; grid-row: auto; margin-top: 4px; } .area-app + .suggestions { margin-top: 16px; } }
 .suggestions li { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 11px 0; border-top: 1px solid var(--rule); }
 .suggestions li div { display: grid; min-width: 0; }
@@ -418,21 +422,21 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
   height: 60px;
   overflow: hidden;
   border: 4px solid var(--print);
-  box-shadow: 0 6px 12px -8px rgba(43, 33, 25, .6);
+  box-shadow: 0 6px 12px -6px rgba(0, 0, 0, .7);
 }
 .plate::after { content: ""; position: absolute; inset: 0; background-image: var(--grain-light); opacity: .12; }
-.plate-spiritual { background: #ddd url("cross-mountain.jpg") 42% 30% / cover; }
-.plate-physical { background: #ddd url("runner.jpg") 50% 45% / cover; }
-.plate-mental { background: var(--midnight) url("fishing.jpg") 25% 62% / cover; }
-.plate-emotional { background: var(--umber) url("worship.jpg") 58% 66% / cover; }
+.plate-spiritual { background: #ddd url("cross-mountain.jpg?v=202610191733") 42% 30% / cover; }
+.plate-physical { background: #ddd url("runner.jpg?v=202610191733") 50% 45% / cover; }
+.plate-mental { background: var(--olive) url("fishing.jpg?v=202610191733") 25% 62% / cover; }
+.plate-emotional { background: var(--umber) url("worship.jpg?v=202610191733") 58% 66% / cover; }
 
 /* ---------- group: a darkroom panel ---------- */
 #group {
   position: relative;
   overflow: hidden;
   background:
-    linear-gradient(180deg, rgba(37, 44, 54, .66) 0%, rgba(37, 44, 54, .9) 38%, rgba(37, 44, 54, .97) 100%),
-    var(--midnight) url("canoe.jpg") 50% 45% / cover;
+    linear-gradient(180deg, rgba(49, 39, 30, .62) 0%, rgba(49, 39, 30, .9) 38%, rgba(49, 39, 30, .97) 100%),
+    var(--umber) url("canoe.jpg?v=202610191733") 50% 45% / cover;
   color: var(--glow);
   margin-left: calc(-1 * var(--gutter-l));
   margin-right: calc(-1 * var(--gutter-r));
@@ -555,8 +559,8 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
 .quad button b { font-family: var(--display); font-weight: 400; font-size: 1.8rem; line-height: 1; filter: url(#fuzz-sm); }
 .quad button span { font-size: .98rem; font-style: italic; color: var(--ink-2); }
 .quad button[aria-pressed="true"] { background: var(--powder); color: var(--paper); }
-.quad button[aria-pressed="true"] span { color: rgba(248, 242, 230, .85); }
-.quad-detail { background: var(--choc); color: var(--glow); padding: 20px 22px 14px; margin-bottom: 8px; border: 1px solid rgba(214, 204, 168, .3); }
+.quad button[aria-pressed="true"] span { color: rgba(37, 44, 54, .8); }
+.quad-detail { background: var(--burgundy); color: var(--glow); padding: 20px 22px 14px; margin-bottom: 8px; border: 1px solid rgba(214, 204, 168, .3); }
 .quad-detail .eyebrow { color: var(--powder); }
 .quad-detail .q-name { font-family: var(--cond); font-weight: 600; font-size: 2.4rem; letter-spacing: .02em; text-transform: uppercase; color: var(--powder); margin-bottom: 8px; filter: url(#fuzz-sm); }
 .q-what { font-size: 1.12rem; }
@@ -632,7 +636,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
 .nav-account.signed-in { border-color: var(--powder); color: var(--powder); }
 .account-dialog { border: 1px solid var(--rule); padding: 28px 22px 22px; width: min(420px, calc(100vw - 32px)); max-height: calc(100vh - 32px); overflow: auto; background: var(--paper-2); color: var(--ink); display: none; }
 .account-dialog[open] { display: grid; gap: 12px; }
-.account-dialog::backdrop { background: rgba(37, 44, 54, .6); }
+.account-dialog::backdrop { background: rgba(12, 12, 0, .7); }
 .account-dialog .acct-out, .account-dialog .acct-in { display: grid; gap: 12px; }
 .account-dialog [hidden] { display: none !important; }
 .acct-title { font-family: var(--display); font-size: 2rem; text-transform: none; letter-spacing: 0; font-weight: 400; filter: url(#fuzz-sm); }
@@ -657,7 +661,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
 .jlist, .jpage { background: var(--paper-2); border: 1px solid var(--rule); padding: 14px 16px; }
 .jlist { padding: 0 0 14px; border-top: 3px solid var(--powder); }
 .jlist > .jitems, .jlist > .jadd { margin-left: 16px; margin-right: 16px; }
-.jlist-head { display: flex; align-items: center; gap: 10px; padding: 12px 16px 10px; background: rgba(102, 34, 33, .05); border-bottom: 1px solid var(--ink-2); cursor: text; }
+.jlist-head { display: flex; align-items: center; gap: 10px; padding: 12px 16px 10px; background: rgba(12, 12, 0, .25); border-bottom: 1px solid var(--rule); cursor: text; }
 .jlist-title { flex: 1; min-width: 0; background: transparent; border: 0; border-bottom: 1px dashed transparent; color: var(--ink); font-family: var(--cond); font-weight: 600; font-size: 1.6rem; line-height: 1.1; text-transform: uppercase; letter-spacing: .03em; padding: 0 0 2px; }
 .jlist-title:hover, .jlist-title:focus { outline: none; border-bottom-color: var(--powder); }
 .jlist-title::placeholder { color: var(--muted); }
