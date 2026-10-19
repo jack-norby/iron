@@ -30,7 +30,7 @@ Without accounts, everything saves in the browser on each person's device.
 | `goals.js` | The four areas, their suggested goals and the group questions (Spiritual Workout Plan + Iron). Edit this to change content. |
 | `plan.js` | The Spiritual Workout Plan readings (Fall 2026). Replace the weeks each semester. |
 | `style.css` | All the styling. Colors and fonts are tokens at the top. |
-| `*.jpg` | The photos (cross in the trees, sword in the light, cross-shaped church window, cross on a mountain, runner, dove, raised hands) |
+| `*.jpg` | Photos from the Pinterest look board (cowboy, sword on the mountain, white church, baptism, cross-shaped church window, cross on a mountain, runner, old window, worship) |
 | `favicon.svg`, `*.png`, `manifest.webmanifest` | The sword icon for the browser tab and home screen |
 | `og-image.jpg` | The picture that shows when someone texts or posts the link |
 
