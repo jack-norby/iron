@@ -75,10 +75,9 @@ body {
   flex-direction: column;
   overflow: hidden;
   margin: 0;
-  /* aged paper: mottling and fibers (paper.png) and two faint fold lines, over the base color */
+  /* a fine, even paper grain (paper.png) over the base color */
   background:
-    linear-gradient(90deg, transparent 0 6.4%, rgba(0, 0, 0, .1) 6.5%, rgba(255, 250, 235, .05) 6.65%, transparent 6.8% 93.4%, rgba(0, 0, 0, .08) 93.5%, rgba(255, 250, 235, .04) 93.65%, transparent 93.8%),
-    url("paper.png?v=202610192115") 0 0 / 512px repeat,
+    url("paper.png?v=202610192120") 0 0 / 256px repeat,
     var(--paper);
   color: var(--ink);
   font-family: var(--body);
@@ -431,10 +430,10 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
   box-shadow: 0 6px 12px -6px rgba(0, 0, 0, .7);
 }
 .plate::after { content: ""; position: absolute; inset: 0; background-image: var(--grain-light); opacity: .12; }
-.plate-spiritual { background: #ddd url("cross-mountain.jpg?v=202610192115") 42% 30% / cover; }
-.plate-physical { background: #ddd url("runner.jpg?v=202610192115") 50% 45% / cover; }
-.plate-mental { background: var(--olive) url("fishing.jpg?v=202610192115") 25% 62% / cover; }
-.plate-emotional { background: var(--umber) url("worship.jpg?v=202610192115") 58% 66% / cover; }
+.plate-spiritual { background: #ddd url("cross-mountain.jpg?v=202610192120") 42% 30% / cover; }
+.plate-physical { background: #ddd url("runner.jpg?v=202610192120") 50% 45% / cover; }
+.plate-mental { background: var(--olive) url("fishing.jpg?v=202610192120") 25% 62% / cover; }
+.plate-emotional { background: var(--umber) url("worship.jpg?v=202610192120") 58% 66% / cover; }
 
 /* ---------- group: a darkroom panel ---------- */
 #group {
@@ -442,7 +441,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
   overflow: hidden;
   background:
     linear-gradient(180deg, rgba(49, 39, 30, .62) 0%, rgba(49, 39, 30, .9) 38%, rgba(49, 39, 30, .97) 100%),
-    var(--umber) url("canoe.jpg?v=202610192115") 50% 45% / cover;
+    var(--umber) url("canoe.jpg?v=202610192120") 50% 45% / cover;
   color: var(--glow);
   margin-left: calc(-1 * var(--gutter-l));
   margin-right: calc(-1 * var(--gutter-r));
@@ -639,7 +638,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); pa
 .site-header .inner { align-items: center; }
 .nav-account { font-family: var(--mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; background: transparent; color: var(--ink); border: 1px solid var(--ink-2); border-radius: 0; padding: 7px 12px; cursor: pointer; }
 .nav-account.signed-in { border-color: var(--powder); color: var(--powder); }
-.account-dialog { border: 1px solid var(--rule); padding: 28px 22px 22px; width: min(420px, calc(100vw - 32px)); max-height: calc(100vh - 32px); overflow: auto; background: url("paper.png?v=202610192115") 0 0 / 512px repeat, var(--paper); color: var(--ink); display: none; }
+.account-dialog { border: 1px solid var(--rule); padding: 28px 22px 22px; width: min(420px, calc(100vw - 32px)); max-height: calc(100vh - 32px); overflow: auto; background: url("paper.png?v=202610192120") 0 0 / 256px repeat, var(--paper); color: var(--ink); display: none; }
 .account-dialog[open] { display: grid; gap: 12px; }
 .account-dialog::backdrop { background: rgba(12, 12, 0, .7); }
 .account-dialog .acct-out, .account-dialog .acct-in { display: grid; gap: 12px; }
