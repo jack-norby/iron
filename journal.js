@@ -66,6 +66,11 @@
   }
 
   // ---------- this month's actions (four lists) ----------
+  function addLabel(title, li) {
+    var t = (title || "").trim();
+    if (!t) return "Add to list " + (li + 1);
+    return "Add to " + t;
+  }
   function renderActions() {
     var key = monthKey(view);
     var m = month(key);
@@ -82,6 +87,11 @@
       title.setAttribute("aria-label", "List " + (li + 1) + " name");
       title.addEventListener("input", function () {
         changeLater("title" + key + li, function () { month(key).lists[li].title = title.value; });
+        // the "Add to …" box follows the list's name as you type
+        var box = col.querySelector(".jadd input");
+        var ph = addLabel(title.value, li);
+        box.placeholder = ph;
+        box.setAttribute("aria-label", ph);
       });
       head.appendChild(title);
       head.appendChild(el("span", "jlist-count", list.items.length ? list.items.filter(function (x) { return x.done; }).length + "/" + list.items.length : "Rename"));
@@ -91,10 +101,10 @@
         ul.appendChild(itemRow(item, function () { return month(key).lists[li].items; }, renderActions));
       });
       col.appendChild(ul);
-      col.appendChild(addForm("Add to " + (list.title.trim() || "list " + (li + 1)), function (text) {
+      col.appendChild(addForm(addLabel(list.title, li), function (text) {
         change(function () { month(key).lists[li].items.push({ id: uid(), t: text, done: false }); });
         renderActions();
-      }));
+      }, "list-" + li));
       box.appendChild(col);
     });
   }
@@ -131,9 +141,11 @@
     li.appendChild(rm);
     return li;
   }
-  function addForm(placeholder, onAdd) {
+  // slot names the box so it gets focus back after the list redraws
+  function addForm(placeholder, onAdd, slot) {
     var f = el("form", "jadd");
     var input = el("input");
+    input.dataset.slot = slot;
     input.type = "text";
     input.maxLength = 160;
     input.placeholder = placeholder;
@@ -147,7 +159,7 @@
       var v = input.value.trim();
       if (!v) { input.focus(); return; }
       onAdd(v);
-      var again = document.querySelector('[placeholder="' + placeholder + '"]');
+      var again = document.querySelector('.jadd input[data-slot="' + slot + '"]');
       if (again) again.focus();
     });
     return f;
@@ -188,7 +200,7 @@
       box.appendChild(addForm(p.placeholder, function (text) {
         change(function (j) { j[p.key].push({ id: uid(), t: text, date: todayKey(), done: false }); });
         renderPages();
-      }));
+      }, p.key));
     });
   }
 
